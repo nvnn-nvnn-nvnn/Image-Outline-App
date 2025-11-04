@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import "@radix-ui/themes/styles.css";
 import { StyledEngineProvider } from '@mui/material/styles';
 import './index.css'
-import App from './App.jsx'
+import App from './App'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

@@ -25,5 +25,9 @@
   ],
   "env": {
     "REMOVE_BG_API_KEY": "@remove_bg_api_key"
-  }
+  },
+  "rewrites" [{
+    "source": "/(.*)",
+    "destination": "/"
+  }]
 }

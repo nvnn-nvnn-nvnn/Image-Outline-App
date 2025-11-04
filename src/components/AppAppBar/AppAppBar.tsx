@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
@@ -12,9 +11,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import ColorModeIconDropdown from "./ColorModeIconDropdown";
-import Sitemark from "./SitemarkIcon";
-
+import Typography from '@mui/material/Typography';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
@@ -22,13 +20,47 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   justifyContent: 'space-between',
   flexShrink: 0,
   borderRadius: `calc(${theme.shape.borderRadius}px + 8px)`,
-  backdropFilter: 'blur(24px)',
-  border: '1px solid',
-  borderColor: '#3a3f4b',  // Changed to gray border
-  backgroundColor: '#252932',  // Changed to gray background
-  boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
-  padding: '8px 12px',
+  
+  // Core glassmorphism properties
+  backdropFilter: 'blur(24px) saturate(180%)',
+  WebkitBackdropFilter: 'blur(24px) saturate(180%)',  // Safari
+  
+  // Semi-transparent background (key!)
+  backgroundColor: '',  // 60% opacity
+  
+  // Subtle border with transparency
+  border: '1px solid rgba(255, 255, 255, 0.5)',
+  
+  // Stronger shadow for depth
+  boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+  
+  padding: '15px 24px',
+  
+  // Optional: add a subtle highlight on top edge
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: '1px',
+    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
+  },
 }));
+
+// Temporary Sitemark placeholder
+const Sitemark = () => (
+  <Typography variant="h6" sx={{ fontWeight: 'bold', mr: 3, fontSize: "20px" }}>
+    Strokify
+  </Typography>
+);
+
+// Temporary ColorModeIconDropdown placeholder
+const ColorModeIconDropdown = ({ size }: { size?: 'small' | 'medium' }) => (
+  <IconButton size={size}>
+    <Brightness4Icon />
+  </IconButton>
+);
 
 export default function AppAppBar() {
   const [open, setOpen] = React.useState(false);
@@ -46,40 +78,33 @@ export default function AppAppBar() {
         bgcolor: 'transparent',
         backgroundImage: 'none',
         mt: 'calc(var(--template-frame-height, 0px) + 28px)',
+        margin: '10px',
       }}
     >
       <Container maxWidth="lg">
         <StyledToolbar variant="dense" disableGutters>
-          <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0 }}>
-            {/* Changed Logo to Text */}
-            <Box sx={{ 
-              fontWeight: 'bold', 
-              fontSize: '1.5rem', 
-              color: '#e8eaed',
-              mr: 3 
-            }}>
-              Image Outliner
-            </Box>
+          <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0, }}>
+            <Sitemark />
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               <Button variant="text" color="info" size="small">
                 Features
               </Button>
               <Button variant="text" color="info" size="small">
-                Testimonials
+                Terms
               </Button>
               <Button variant="text" color="info" size="small">
                 Highlights
               </Button>
-              <Button variant="text" color="info" size="small">
-                Pricing
-              </Button>
               <Button variant="text" color="info" size="small" sx={{ minWidth: 0 }}>
-                FAQ
+                About
               </Button>
               <Button variant="text" color="info" size="small" sx={{ minWidth: 0 }}>
                 Blog
               </Button>
+             
             </Box>
+
+            
           </Box>
           <Box
             sx={{
@@ -88,13 +113,10 @@ export default function AppAppBar() {
               alignItems: 'center',
             }}
           >
-            <Button color="primary" variant="text" size="small">
-              Sign in
+            <Button sx={{ display: {}, color: 'red', fontSize: '18px', fontWeight: '50px'}}>
+              Support Us
             </Button>
-            <Button color="primary" variant="contained" size="small">
-              Sign up
-            </Button>
-            <ColorModeIconDropdown />
+       
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' }, gap: 1 }}>
             <ColorModeIconDropdown size="medium" />
@@ -130,16 +152,7 @@ export default function AppAppBar() {
                 <MenuItem>FAQ</MenuItem>
                 <MenuItem>Blog</MenuItem>
                 <Divider sx={{ my: 3 }} />
-                <MenuItem>
-                  <Button color="primary" variant="contained" fullWidth>
-                    Sign up
-                  </Button>
-                </MenuItem>
-                <MenuItem>
-                  <Button color="primary" variant="outlined" fullWidth>
-                    Sign in
-                  </Button>
-                </MenuItem>
+             
               </Box>
             </Drawer>
           </Box>

@@ -29,193 +29,188 @@ function Copyright() {
 
 export default function Footer() {
   return (
-    <Container
+    <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: { xs: 4, sm: 8 },
-        py: { xs: 8, sm: 10 },
-        textAlign: { sm: 'center', md: 'left' },
+        backgroundColor: "#181b20",
+        color: "#fff",
+        py: { xs: 6, sm: 8 },
+        mt: 8, // Add margin top to separate from content above
       }}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: { xs: 'column', sm: 'row' },
-          width: '100%',
-          justifyContent: 'space-between',
-        }}
-      >
+      <Container maxWidth="lg">
+        {/* Main Content Row */}
         <Box
           sx={{
             display: 'flex',
-            flexDirection: 'column',
-            gap: 4,
-            minWidth: { xs: '100%', sm: '60%' },
+            flexDirection: { xs: 'column', sm: 'row' },
+            justifyContent: 'space-between',
+            gap: { xs: 4, sm: 6 },
+            mb: 4,
           }}
         >
-          <Box sx={{ width: { xs: '100%', sm: '60%' } }}>
-            <SitemarkIcon />
-            <Typography variant="body2" gutterBottom sx={{ fontWeight: 600, mt: 2 }}>
+          {/* Left Section - Newsletter */}
+          <Box sx={{ flex: 1, maxWidth: { sm: '400px' } }}>
+            <Typography variant="h6" sx={{ color: '#3b82f6', mb: 2 }}>
+              Strokify
+            </Typography>
+            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
               Join the newsletter
             </Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
-              Subscribe for weekly updates. No spams ever!
+            <Typography variant="body2" sx={{ color: '#9ca3af', mb: 2 }}>
+              Subscribe for weekly updates. No spams ever! EVER EVER Just updates only
             </Typography>
-            <InputLabel htmlFor="email-newsletter">Email</InputLabel>
-            <Stack direction="row" spacing={1} useFlexGap>
+            
+            <Stack direction="row" spacing={1}>
               <TextField
-                id="email-newsletter"
-                hiddenLabel
                 size="small"
-                variant="outlined"
-                fullWidth
-                aria-label="Enter your email address"
                 placeholder="Your email address"
-                slotProps={{
-                  htmlInput: {
-                    autoComplete: 'off',
-                    'aria-label': 'Enter your email address',
+                sx={{
+                  flex: 1,
+                  '& .MuiOutlinedInput-root': {
+                    backgroundColor: '#252932',
+                    '& fieldset': { borderColor: '#3a3f4b' },
+                    '&:hover fieldset': { borderColor: '#4a5568' },
                   },
+                  '& input': { color: '#fff' },
                 }}
-                sx={{ width: '250px' }}
               />
               <Button
                 variant="contained"
-                color="primary"
-                size="small"
-                sx={{ flexShrink: 0 }}
+                sx={{
+                  backgroundColor: '#3b82f6',
+                  '&:hover': { backgroundColor: '#2563eb' },
+                  flexShrink: 0,
+                }}
               >
                 Subscribe
               </Button>
             </Stack>
           </Box>
+
+          {/* Right Section - Links */}
+          <Box
+            sx={{
+              display: 'flex',
+              gap: { xs: 4, sm: 8 },
+              flexWrap: 'wrap',
+            }}
+          >
+            {/* Product Column */}
+            <Box sx={{ minWidth: '120px' }}>
+              <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
+                Product
+              </Typography>
+              <Stack spacing={1}>
+                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                  Features
+                </Link>
+                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                  Highlights
+                </Link>
+                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                  About
+                </Link>
+                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                  Blog
+                </Link>
+              </Stack>
+            </Box>
+
+            {/* Company Column */}
+            <Box sx={{ minWidth: '120px' }}>
+              <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
+                Company
+              </Typography>
+              <Stack spacing={1}>
+                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                  About us
+                </Link>
+                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                  Developer
+                </Link>
+                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                  Github
+                </Link>
+                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                  DONT CLICK THIS LINK!
+                </Link>
+              </Stack>
+            </Box>
+
+            {/* Legal Column */}
+            <Box sx={{ minWidth: '120px' }}>
+              <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
+                Legal
+              </Typography>
+              <Stack spacing={1}>
+                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                  Terms
+                </Link>
+                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                  Privacy
+                </Link>
+                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                  Contact
+                </Link>
+              </Stack>
+            </Box>
+          </Box>
         </Box>
+
+        {/* Bottom Section - Copyright & Social */}
         <Box
           sx={{
-            display: { xs: 'none', sm: 'flex' },
-            flexDirection: 'column',
-            gap: 1,
+            display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
+            justifyContent: 'space-between',
+            alignItems: { xs: 'flex-start', sm: 'center' },
+            pt: 4,
+            borderTop: '1px solid #3a3f4b',
+            gap: 2,
           }}
         >
-          <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
-            Product
-          </Typography>
-          <Link color="text.secondary" variant="body2" href="#">
-            Features
-          </Link>
-          <Link color="text.secondary" variant="body2" href="#">
-            Testimonials
-          </Link>
-          <Link color="text.secondary" variant="body2" href="#">
-            Highlights
-          </Link>
-          <Link color="text.secondary" variant="body2" href="#">
-            Pricing
-          </Link>
-          <Link color="text.secondary" variant="body2" href="#">
-            FAQs
-          </Link>
+          {/* Left - Links & Copyright */}
+          <Box>
+            <Box sx={{ display: 'flex', gap: 1, mb: 1, flexWrap: 'wrap' }}>
+              <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', fontSize: '0.875rem', '&:hover': { color: '#fff' } }}>
+                Privacy Policy
+              </Link>
+              <Typography sx={{ color: '#9ca3af', fontSize: '0.875rem' }}>•</Typography>
+              <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', fontSize: '0.875rem', '&:hover': { color: '#fff' } }}>
+                Terms of Service
+              </Link>
+            </Box>
+            <Typography variant="body2" sx={{ color: '#6b7280', fontSize: '0.875rem' }}>
+              Copyright © Devan Lee {new Date().getFullYear()}
+            </Typography>
+          </Box>
+
+          {/* Right - Social Icons */}
+          <Stack direction="row" spacing={1}>
+            <IconButton
+              href="https://github.com/mui"
+              sx={{ color: '#9ca3af', '&:hover': { color: '#fff' } }}
+              size="small"
+            >
+              <GitHubIcon />
+            </IconButton>
+            <IconButton
+              href="https://x.com/MaterialUI"
+              sx={{ color: '#9ca3af', '&:hover': { color: '#fff' } }}
+              size="small"
+            >
+              <TwitterIcon />
+            </IconButton>
+            <IconButton
+              href="https://www.linkedin.com/company/mui/"
+              sx={{ color: '#9ca3af', '&:hover': { color: '#fff' } }}
+              size="small"
+            >
+              <LinkedInIcon />
+            </IconButton>
+          </Stack>
         </Box>
-        <Box
-          sx={{
-            display: { xs: 'none', sm: 'flex' },
-            flexDirection: 'column',
-            gap: 1,
-          }}
-        >
-          <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
-            Company
-          </Typography>
-          <Link color="text.secondary" variant="body2" href="#">
-            About us
-          </Link>
-          <Link color="text.secondary" variant="body2" href="#">
-            Careers
-          </Link>
-          <Link color="text.secondary" variant="body2" href="#">
-            Press
-          </Link>
-        </Box>
-        <Box
-          sx={{
-            display: { xs: 'none', sm: 'flex' },
-            flexDirection: 'column',
-            gap: 1,
-          }}
-        >
-          <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
-            Legal
-          </Typography>
-          <Link color="text.secondary" variant="body2" href="#">
-            Terms
-          </Link>
-          <Link color="text.secondary" variant="body2" href="#">
-            Privacy
-          </Link>
-          <Link color="text.secondary" variant="body2" href="#">
-            Contact
-          </Link>
-        </Box>
-      </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          pt: { xs: 4, sm: 8 },
-          width: '100%',
-          borderTop: '1px solid',
-          borderColor: 'divider',
-        }}
-      >
-        <div>
-          <Link color="text.secondary" variant="body2" href="#">
-            Privacy Policy
-          </Link>
-          <Typography sx={{ display: 'inline', mx: 0.5, opacity: 0.5 }}>
-            &nbsp;•&nbsp;
-          </Typography>
-          <Link color="text.secondary" variant="body2" href="#">
-            Terms of Service
-          </Link>
-          <Copyright />
-        </div>
-        <Stack
-          direction="row"
-          spacing={1}
-          useFlexGap
-          sx={{ justifyContent: 'left', color: 'text.secondary' }}
-        >
-          <IconButton
-            color="inherit"
-            size="small"
-            href="https://github.com/mui"
-            aria-label="GitHub"
-            sx={{ alignSelf: 'center' }}
-          >
-            <GitHubIcon />
-          </IconButton>
-          <IconButton
-            color="inherit"
-            size="small"
-            href="https://x.com/MaterialUI"
-            aria-label="X"
-            sx={{ alignSelf: 'center' }}
-          >
-            <TwitterIcon />
-          </IconButton>
-          <IconButton
-            color="inherit"
-            size="small"
-            href="https://www.linkedin.com/company/mui/"
-            aria-label="LinkedIn"
-            sx={{ alignSelf: 'center' }}
-          >
-            <LinkedInIcon />
-          </IconButton>
-        </Stack>
-      </Box>
-    </Container>
+      </Container>
+    </Box>
   );
 }

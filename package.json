@@ -5,12 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
+    "dev:api": "nodemon server/dev-server.mjs",
+    "dev:all": "concurrently \"npm run dev\" \"npm run dev:api\"",
     "build": "vite build",
-    "start" : "node server",
+    "start": "node server",
     "lint": "eslint .",
     "preview": "vite preview --port 8080",
     "dev:full": "vercel dev",
-    "setup": "cp .env.cQXR539sfEjq1RNeWsCYdxHB .env && echo "
+    "vercel-build": "vite build"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -19,11 +21,15 @@
     "@mui/icons-material": "^7.3.4",
     "@mui/material": "^7.3.4",
     "@radix-ui/themes": "^3.2.1",
-    "axios": "^1.13.0",
+    "axios": "^1.13.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "fabric": "^6.7.1",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
+    "form-data": "^4.0.4",
+    "node-fetch": "^3.3.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "react-dropzone": "^14.3.8"
   },
   "devDependencies": {
@@ -32,6 +38,7 @@
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^5.0.4",
     "autoprefixer": "^10.4.21",
+    "concurrently": "^9.2.1",
     "eslint": "^9.36.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.22",
@@ -39,13 +46,13 @@
     "nodemon": "^3.1.10",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.16",
-    "vite": "^7.1.7",
+    "vite": "^7.1.12",
     "vite-plugin-qrcode": "^0.3.0",
     "vite-plugin-svgr": "^4.5.0"
   },
-  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "description": "Image outline app with background removal and stroke effects",
   "main": "eslint.config.js",
-  "keywords": [],
+  "keywords": ["image", "background-removal", "stroke", "outline"],
   "author": "",
   "license": "ISC"
 }

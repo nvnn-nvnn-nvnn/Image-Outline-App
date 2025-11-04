@@ -14,24 +14,11 @@ import AppAppBar from './components/AppAppBar/AppAppBar'
 import Square from './components/Layout/uploadSquare'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-function App() {
-  const greeting = import.meta.env.VITE_GREETING
-  const [count, setCount] = useState(0)
+function Features(){
 
-  return (
-      <Theme appearance="dark" style={{ backgroundColor: '#1a1d23', minHeight: '100vh' }}>
-        <AppAppBar/>
-        <Toolbar /> {/* This creates space for the fixed AppBar */}
+
+    return{
         
-          <main style={{ paddingBottom: '40px' }}>
-            <div>
-              <Square/>
-            </div>
-          </main>
-        
-        <Footer/> 
-      </Theme>
-  )
+    }
+
 }
-
-export default App
