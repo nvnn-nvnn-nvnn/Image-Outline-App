@@ -13,6 +13,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import Typography from '@mui/material/Typography';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
+import { PageContext } from '../../contexts/pageContexts';
+
+// Tabbing Shit
+import { Tabs, Tab } from '@mui/material';
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
@@ -49,8 +53,28 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 }));
 
 // Temporary Sitemark placeholder
-const Sitemark = () => (
-  <Typography variant="h6" sx={{ fontWeight: 'bold', mr: 3, fontSize: "20px" }}>
+const Sitemark = ({ setCurrentPage }: { setCurrentPage: (page: string) => void }) => (
+  <Typography 
+    variant="h6" 
+    component="a"
+    onClick={() => setCurrentPage('index')}
+    sx={{ 
+      fontWeight: 'bold', 
+      mr: 3, 
+      fontSize: "20px",
+      textDecoration: 'none',
+      color: '#fff',
+      cursor: 'pointer',
+      transition: 'all 0.3s ease',
+      '&:hover': {
+        fontSize: "23px",
+        textShadow: '0 0 10px #4a90e2, 0 0 20px #4a90e2, 0 0 40px #4a90e2',
+        color: "#fff"
+        
+      }
+      
+    }}
+  >
     Strokify
   </Typography>
 );
@@ -65,9 +89,16 @@ const ColorModeIconDropdown = ({ size }: { size?: 'small' | 'medium' }) => (
 export default function AppAppBar() {
   const [open, setOpen] = React.useState(false);
 
+  // Tabs
+  
+  const { setCurrentPage } = React.useContext(PageContext);
+
+
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
+
+
 
   return (
     <AppBar
@@ -84,21 +115,27 @@ export default function AppAppBar() {
       <Container maxWidth="lg">
         <StyledToolbar variant="dense" disableGutters>
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0, }}>
-            <Sitemark />
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              <Button variant="text" color="info" size="small">
+            <Sitemark setCurrentPage={setCurrentPage} />
+              <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+              <Button variant="text" color="info" size="small" 
+              onClick={() => setCurrentPage('features')}>
                 Features
               </Button>
-              <Button variant="text" color="info" size="small">
+              <Button variant="text" color="info" size="small"
+              onClick={() => setCurrentPage('terms')}
+              >
                 Terms
               </Button>
-              <Button variant="text" color="info" size="small">
+              <Button variant="text" color="info" size="small"
+              onClick={() => setCurrentPage('highlights')}>
                 Highlights
               </Button>
-              <Button variant="text" color="info" size="small" sx={{ minWidth: 0 }}>
+              <Button variant="text" color="info" size="small" sx={{ minWidth: 0 }}
+              onClick={() => setCurrentPage('about')}>
                 About
               </Button>
-              <Button variant="text" color="info" size="small" sx={{ minWidth: 0 }}>
+              <Button variant="text" color="info" size="small" sx={{ minWidth: 0 }}
+              onClick={() => setCurrentPage('blog')}>
                 Blog
               </Button>
              
@@ -113,7 +150,8 @@ export default function AppAppBar() {
               alignItems: 'center',
             }}
           >
-            <Button sx={{ display: {}, color: 'red', fontSize: '18px', fontWeight: '50px'}}>
+            <Button sx={{ display: {}, color: 'red', fontSize: '18px', fontWeight: '50px'}}
+            onClick={() => setCurrentPage('support')}>
               Support Us
             </Button>
        
@@ -145,12 +183,12 @@ export default function AppAppBar() {
                   </IconButton>
                 </Box>
 
-                <MenuItem>Features</MenuItem>
-                <MenuItem>Testimonials</MenuItem>
-                <MenuItem>Highlights</MenuItem>
-                <MenuItem>Pricing</MenuItem>
-                <MenuItem>FAQ</MenuItem>
-                <MenuItem>Blog</MenuItem>
+                  <MenuItem onClick={() => setCurrentPage('features')}>Features</MenuItem>
+                  <MenuItem onClick={() => setCurrentPage('terms')}>Terms</MenuItem>
+                  <MenuItem onClick={() => setCurrentPage('highlights')}>Highlights</MenuItem>
+                  <MenuItem onClick={() => setCurrentPage('about')}>About</MenuItem>
+                  <MenuItem onClick={() => setCurrentPage('blog')}>Blog</MenuItem>
+                
                 <Divider sx={{ my: 3 }} />
              
               </Box>

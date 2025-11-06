@@ -5,11 +5,11 @@
 }
 
 html {
-  background-color: #1a1d23 !important;
+  background-color: #0d1421 !important;
 }
 
 body {
-  background-color: #1a1d23 !important;
+  background-color: #0d1421 !important;
   color: #e8eaed !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -19,7 +19,7 @@ body {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  background-color: #1a1d23 !important;
+  background-color: #0d1421 !important;
   color: #e8eaed !important;
 }
 

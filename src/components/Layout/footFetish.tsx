@@ -12,6 +12,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/X';
 import SitemarkIcon from "../AppAppBar/SitemarkIcon";
+import { PageContext } from '../../contexts/pageContexts';
 
 
 function Copyright() {
@@ -28,6 +29,7 @@ function Copyright() {
 }
 
 export default function Footer() {
+  const { setCurrentPage } = React.useContext(PageContext);
   return (
     <Box
       sx={{
@@ -101,16 +103,21 @@ export default function Footer() {
                 Product
               </Typography>
               <Stack spacing={1}>
-                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}
+                onClick={() => setCurrentPage('features')}>
                   Features
                 </Link>
-                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}
+                 onClick={() => setCurrentPage('highlights')}>
+                
                   Highlights
                 </Link>
-                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}
+                 onClick={() => setCurrentPage('about')}>
                   About
                 </Link>
-                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}
+                 onClick={() => setCurrentPage('blog')}>
                   Blog
                 </Link>
               </Stack>
@@ -122,16 +129,20 @@ export default function Footer() {
                 Company
               </Typography>
               <Stack spacing={1}>
-                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}
+                onClick={() => setCurrentPage('about')}>
                   About us
                 </Link>
-                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                <Link href="https://devanlee.me" target="_blank" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}
+                 >
                   Developer
                 </Link>
-                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                <Link href="#" target="_blank" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}
+                 >
                   Github
                 </Link>
-                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                <Link href="https://www.youtube.com/watch?v=xMHJGd3wwZk" target="_blank" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}
+                >
                   DONT CLICK THIS LINK!
                 </Link>
               </Stack>
@@ -143,13 +154,16 @@ export default function Footer() {
                 Legal
               </Typography>
               <Stack spacing={1}>
-                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}
+                onClick={() => setCurrentPage('tos')}>
                   Terms
                 </Link>
-                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}
+                onClick={() => setCurrentPage('privacy')}>
                   Privacy
                 </Link>
-                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}>
+                <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}
+                onClick={() => setCurrentPage('contact')}>
                   Contact
                 </Link>
               </Stack>
@@ -172,11 +186,13 @@ export default function Footer() {
           {/* Left - Links & Copyright */}
           <Box>
             <Box sx={{ display: 'flex', gap: 1, mb: 1, flexWrap: 'wrap' }}>
-              <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', fontSize: '0.875rem', '&:hover': { color: '#fff' } }}>
+              <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', fontSize: '0.875rem', '&:hover': { color: '#fff' } }}
+              onClick={() => setCurrentPage('privacy')}>
                 Privacy Policy
               </Link>
               <Typography sx={{ color: '#9ca3af', fontSize: '0.875rem' }}>•</Typography>
-              <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', fontSize: '0.875rem', '&:hover': { color: '#fff' } }}>
+              <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', fontSize: '0.875rem', '&:hover': { color: '#fff' } }}
+              onClick={() => setCurrentPage('tos')}>
                 Terms of Service
               </Link>
             </Box>

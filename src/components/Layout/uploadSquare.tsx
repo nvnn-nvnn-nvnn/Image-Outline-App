@@ -298,16 +298,16 @@ export default function ImageUploadSquare() {
             <Box sx={{ 
               mb: 2, 
               p: 2, 
-              border: '1px solid #3a3f4b', 
+              border: '5px solid #3a3f4b', 
               borderRadius: 2,
-              backgroundColor: 'background.default',
+              backgroundColor: '#1e1e4a',
               maxWidth: '500px',
               mx: 'auto',
-              color: '#000'
+              color: '#fff'
             }}>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
                 <Typography variant="h6" gutterBottom sx={{ mb: 0 }}>
-                  Outline Settings
+                  Outline Stroke Settings
                 </Typography>
                 <Button 
                   variant={strokeEnabled ? "contained" : "outlined"}
