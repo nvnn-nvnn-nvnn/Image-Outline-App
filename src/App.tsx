@@ -1,20 +1,42 @@
+// React
 import { useState } from 'react'
 import { useContext } from 'react'
 import { Toolbar } from '@mui/material' // Add this import
+
+// Components
 import ReactLogo from './assets/react.svg?react'
 import viteLogo from '/vite.svg'
 import Header from './components/Layout/givingHead'
 import Footer from './components/Layout/footFetish'
+
+// Images from Assets
+
 import cross from './assets/cross-falls.jpg'
+
+import kirk from './assets/Charlie Kirk Sample 1.jpg'
+
+import fixedkirk from './assets/Kirk Outlined Example 1.png'
+
+import kanye from './assets/Kanye.jpg'
+
+import fixedkanye from './assets/Kanye-Outlined.png'
+
+
+
+// Themes
 import ImageUpload from './components/Layout/ImageUpload'
 import { Flex, Text, Button as RadixButton } from "@radix-ui/themes";
 import { Theme } from "@radix-ui/themes";
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+// Native CSS
 import './App.css'
+
+// APP Bar components
 import AppAppBar from './components/AppAppBar/AppAppBar'
 import Square from './components/Layout/uploadSquare'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+// Page Context + State for AppBar
 import { PageProvider } from './contexts/PageContext';
 import { PageContext } from './contexts/pageContexts'
 
@@ -22,7 +44,8 @@ import { PageContext } from './contexts/pageContexts'
 
 
 function App() {
-  const { currentPage } = useContext(PageContext);
+  // const { currentPage } = useContext(PageContext);
+  const { currentPage, setCurrentPage } = useContext(PageContext);
 
   return (
     <Theme appearance="dark" style={{ backgroundColor: '#0d1421', minHeight: '100vh' }}>
@@ -44,17 +67,18 @@ function App() {
               Create outline strokes for your images efficiently and effectively
             </h2>
              <Box>
-                <Button  sx={{ 
-                    
+                <Button  
+                  onClick={() => setCurrentPage('App')}
+                  sx={{ 
                     width: '200px', 
                     height: '50px',
-                    border: "solid #fff",
+                    border: "solid 1px #fff",
                     justifyContent: "center",
-                    alignItems: "center"
-
-
-
-
+                    alignItems: "center",
+                    '&:hover': {
+                      boxShadow: '0 0 10px #4a90e2, 0 0 20px #4a90e2, 0 0 40px #4a90e2',
+                      border: 'solid 1px #fff'
+                    }
                   }}>
                     Try out the App!
                 </Button>
@@ -63,25 +87,45 @@ function App() {
          
           </div>
        
-
-          <div className='index-gallery'>
-            <img src={cross} alt="" style={{width: '250px'}}/>
-
-            <img src={cross} alt="" style={{width: '250px'}}/>
-
-            <img src={cross} alt="" style={{width: '250px'}}/>
-
-            <img src={cross} alt="" style={{width: '250px'}}/>
-
-            <img src={cross} alt="" style={{width: '250px'}}/>
-
-            <img src={cross} alt="" style={{width: '250px'}}/>
-
-            <img src={cross} alt="" style={{width: '250px'}}/>
-
-            <img src={cross} alt="" style={{width: '250px'}}/>
+          <div className='index-gal-title'>
+            <h1>Examples of what the app can accomplish:</h1>
           </div>
+          <div className='index-gallery'>
 
+            {/* Before */}
+            <img src={kirk} alt="" style={{width: '350px'}}/>
+            {/* After */}
+            <img src={fixedkirk} alt="" style={{width: '350px'}}/>
+            {/* Before */}
+            <img src={kanye} alt="" style={{width: '350px'}}/>
+            {/* After */}
+            <img src={fixedkanye} alt="" style={{width: '350px'}}/>
+
+      
+          </div>    
+
+          <div className='index-extras'>
+              <h3>
+                Like to share what you've made with the app? Send it to us to see!
+              </h3>
+
+              <Box>
+                <Button onClick={() => setCurrentPage('contact')}
+                  sx={{
+                    width: '200px', 
+                    height: '50px',
+                    border: "solid 1px #fff",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    '&:hover': {
+                      boxShadow: '0 0 10px #4a90e2, 0 0 20px #4a90e2, 0 0 40px #4a90e2',
+                      border: 'solid 1px #fff'
+                    }
+                  }}>
+                  Share with us!
+                </Button>
+              </Box>
+          </div>
 
           <section className='index-section-1'>
 
@@ -106,39 +150,397 @@ function App() {
             <h1>
               Features
             </h1>
-            <p>
+            <h2>
               Welcome to Strokify!
-
-              To use this app, simply upload picture, remove the background, adjust the outline stroke on the image, and viola! Your image now has a background!
+            </h2>
+            <p>
+               To use Strokify, simply upload an image with an object, then we can remove the background, and you can adjust the outline stroke on the object, and viola! Your images' object now has a Stroke!
             </p>
+
+            <Box sx={{ 
+              display: 'flex', 
+              justifyContent: 'center', 
+              margin: '40px 0' 
+            }}>
+              <iframe 
+                width="600" 
+                height="338" 
+                src="https://www.youtube.com/embed/YOUR_VIDEO_ID" 
+                title="How to use Strokify"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={{ maxWidth: '100%', borderRadius: '8px' }}
+              />
+            </Box>
+
+
+            
+              <div className="faq-section">
+                <h2>Quick Q&A</h2>
+                <p><strong>Q: How many images can I create per day?</strong></p>
+                <p>A: You can create up to 3 images per day for free!</p>
+                
+                <p><strong>Q: What kind of images can Strokify use?</strong></p>
+                <p>A: So far, Strokify can only operate on PNG, JPG, and IMG images formats</p>
+
+                <p><strong>Q: Do I need to sign in?</strong></p>
+                <p>A: Yes, sign in with Google to start using Strokify.</p>
+              </div>
+
+              <Box sx={{ textAlign: 'center', marginTop: '30px' }}>
+                <Button 
+                  onClick={() => setCurrentPage('about')}
+                  sx={{ 
+                    width: '200px', 
+                    height: '50px',
+                    border: "solid 1px #fff",
+                    '&:hover': {
+                      boxShadow: '0 0 10px #4a90e2, 0 0 20px #4a90e2, 0 0 40px #4a90e2',
+                      border: 'solid 1px #fff'
+                    }
+                  }}
+                >
+                  Learn More About Us
+                </Button>
+              </Box>
+            
+
           </div>
+
+          
         )}
                 
         {/* Terms Page */}
         {currentPage === 'terms' && (
-          <div className='terms-page'>
-            <h1>Terms & Conditions</h1>
+        <div className='terms-page'>
+          <h1>Terms and Conditions for Strokify</h1>
+
+          <div className='terms-mat'>
+            <div className='terms-list'>
+              <ol>
+                <li>
+                  <h2>Acceptance of Terms</h2>
+                  <p>By accessing or using Strokify, you agree to be bound by these Terms and Conditions. If you do not agree to these terms, please do not use the App.</p>
+                </li>
+
+                <li>
+                  <h2>Description of Service</h2>
+                  <p>Strokify provides an image editing service that allows users to:</p>
+                  <ul>
+                    <li>Upload images</li>
+                    <li>Remove image backgrounds automatically</li>
+                    <li>Apply customizable strokes to images</li>
+                    <li>Download edited images for free</li>
+                  </ul>
+                </li>
+
+                <li>
+                  <h2>User Accounts and Eligibility</h2>
+                  <ul>
+                    <li>You must be at least 13 years of age to use this App</li>
+                    <li>You are responsible for maintaining the confidentiality of any account credentials</li>
+                    <li>You agree to provide accurate and complete information when using the App</li>
+                  </ul>
+                </li>
+
+                <li>
+                  <h2>User Content and Uploads</h2>
+
+                  <h3>4.1 Your Responsibilities</h3>
+                  <ul>
+                    <li>You retain all ownership rights to images you upload</li>
+                    <li>You are solely responsible for the content you upload</li>
+                    <li>You represent and warrant that you have all necessary rights to upload and edit the images you submit</li>
+                  </ul>
+
+                  <h3>4.2 Prohibited Content</h3>
+                  <p>You may not upload images that:</p>
+                  <ul>
+                    <li>Infringe upon intellectual property rights of others</li>
+                    <li>Contain illegal, harmful, or offensive content</li>
+                    <li>Violate any applicable laws or regulations</li>
+                    <li>Contain malware, viruses, or malicious code</li>
+                    <li>Depict minors in inappropriate contexts</li>
+                  </ul>
+
+                  <h3>4.3 Content Storage and Privacy</h3>
+                  <ul>
+                    <li>Uploaded images are processed for background removal and stroke application</li>
+                    <li>We do not claim ownership of your uploaded content</li>
+                    <li>Images may be temporarily stored for processing purposes</li>
+                    <li>We reserve the right to remove any content that violates these terms</li>
+                  </ul>
+                </li>
+
+                <li>
+                  <h2>Intellectual Property Rights</h2>
+
+                  <h3>5.1 Your Content</h3>
+                  <p>You retain all rights to images you upload and edit through the App.</p>
+
+                  <h3>5.2 Our Property</h3>
+                  <p>The App, including its design, functionality, software, algorithms, and all related intellectual property, is owned by Strokify and is protected by copyright, trademark, and other laws.</p>
+
+                  <h3>5.3 License to Use the App</h3>
+                  <p>We grant you a limited, non-exclusive, non-transferable license to use the App for personal or commercial purposes, subject to these Terms.</p>
+                </li>
+
+                <li>
+                  <h2>Acceptable Use Policy</h2>
+                  <p>You agree NOT to:</p>
+                  <ul>
+                    <li>Use the App for any illegal purpose</li>
+                    <li>Attempt to gain unauthorized access to the App or its systems</li>
+                    <li>Interfere with or disrupt the App's functionality</li>
+                    <li>Use automated systems (bots, scrapers) without permission</li>
+                    <li>Reverse engineer, decompile, or disassemble the App</li>
+                    <li>Remove or alter any copyright notices or branding</li>
+                  </ul>
+                </li>
+
+                <li>
+                  <h2>Disclaimer of Warranties</h2>
+                  <p>THE APP IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO:</p>
+                  <ul>
+                    <li>Warranties of merchantability or fitness for a particular purpose</li>
+                    <li>Warranties that the App will be uninterrupted, error-free, or secure</li>
+                    <li>Warranties regarding the accuracy or quality of background removal or stroke application</li>
+                  </ul>
+                </li>
+
+                <li>
+                  <h2>Limitation of Liability</h2>
+                  <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW:</p>
+                  <ul>
+                    <li>Strokify shall not be liable for any indirect, incidental, special, consequential, or punitive damages</li>
+                    <li>Our total liability shall not exceed $100 or the amount you paid to use the App (whichever is greater)</li>
+                    <li>We are not responsible for any loss of data, images, or content</li>
+                  </ul>
+                </li>
+
+                <li>
+                  <h2>Indemnification</h2>
+                  <p>You agree to indemnify and hold harmless Strokify, its officers, directors, employees, and agents from any claims, damages, losses, liabilities, and expenses (including legal fees) arising from:</p>
+                  <ul>
+                    <li>Your use of the App</li>
+                    <li>Your uploaded content</li>
+                    <li>Your violation of these Terms</li>
+                    <li>Your violation of any third-party rights</li>
+                  </ul>
+                </li>
+
+                <li>
+                  <h2>Third-Party Services</h2>
+                  <p>The App may integrate with or link to third-party services. We are not responsible for the content, privacy practices, or terms of any third-party services.</p>
+                </li>
+
+                <li>
+                  <h2>Privacy and Data Collection</h2>
+                  <p>Your use of the App is also governed by our Privacy Policy. By using the App, you consent to our collection and use of data as described in the Privacy Policy.</p>
+                </li>
+
+                <li>
+                  <h2>Modifications to the Service</h2>
+                  <p>We reserve the right to:</p>
+                  <ul>
+                    <li>Modify, suspend, or discontinue the App at any time</li>
+                    <li>Change these Terms at any time (we will notify users of material changes)</li>
+                    <li>Update features, functionality, or pricing</li>
+                  </ul>
+                </li>
+
+                <li>
+                  <h2>Termination</h2>
+                  <p>We may terminate or suspend your access to the App immediately, without notice, for:</p>
+                  <ul>
+                    <li>Violation of these Terms</li>
+                    <li>Illegal activity</li>
+                    <li>Abusive behavior</li>
+                    <li>Any reason at our sole discretion</li>
+                  </ul>
+                </li>
+
+                <li>
+                  <h2>Copyright Infringement</h2>
+                  <p>If you believe content on the App infringes your copyright, please contact us at [insert email] with:</p>
+                  <ul>
+                    <li>Your contact information</li>
+                    <li>Description of the copyrighted work</li>
+                    <li>Description of the infringing material and its location</li>
+                    <li>A statement of good faith belief</li>
+                    <li>A statement under penalty of perjury that the information is accurate</li>
+                  </ul>
+                </li>
+
+                <li>
+                  <h2>Governing Law and Dispute Resolution</h2>
+                  <p>These Terms shall be governed by the laws of [Insert Jurisdiction], without regard to conflict of law principles. Any disputes shall be resolved through [arbitration/courts in specified jurisdiction].</p>
+                </li>
+
+                <li>
+                  <h2>Severability</h2>
+                  <p>If any provision of these Terms is found to be unenforceable, the remaining provisions will continue in full effect.</p>
+                </li>
+
+                <li>
+                  <h2>Entire Agreement</h2>
+                  <p>These Terms constitute the entire agreement between you and Strokify regarding the use of the App.</p>
+                </li>
+
+                <li>
+                  <h2>Contact Information</h2>
+                  <p>For questions about these Terms, please contact us at:</p>
+                  <ul>
+                    <li>Email: Strokifybusiness@proton.me</li>
+              
+                  </ul>
+                </li>
+
+                <li>
+                  <h2>Export Control</h2>
+                  <p>You agree to comply with all applicable export and import laws and regulations in your use of the App.</p>
+                </li>
+
+                <li>
+                  <h2>No Waiver</h2>
+                  <p>Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights.</p>
+                </li>
+              </ol>
+
+              <Box sx={{ textAlign: 'center', marginTop: '40px', paddingBottom: '20px' }}>
+                <p style={{ fontStyle: 'italic', marginBottom: '20px' }}>
+                  By using Strokify, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions.
+                </p>
+                <p style={{ fontSize: '14px', color: '#888' }}>
+                  Last Updated: 11/06/2025
+                </p>
+              </Box>
+            </div>
           </div>
-        )}
+        </div>
+      )}
         
         {/* Highlights Page */}
         {currentPage === 'highlights' && (
           <div className='highlights-page'>
             <h1>Highlights</h1>
+            <h2>Check out stroked images others have created!</h2>
+              <div className='highlights-gallery'>
+                  <img src={fixedkirk} alt="" style={{width: '350px'}}/>
+                  
+                  <img src={fixedkanye} alt="" style={{width: '350px'}}/>
+
+                    
+                  <img src={fixedkirk} alt="" style={{width: '350px'}}/>
+                  
+                  <img src={fixedkanye} alt="" style={{width: '350px'}}/>
+                    
+                  <img src={fixedkirk} alt="" style={{width: '350px'}}/>
+                  
+                  <img src={fixedkanye} alt="" style={{width: '350px'}}/>
+
+              </div>
+
+              <div className='index-extras'>
+              <h3>
+                Like to share what you've made with the app? Send it to us to see!
+              </h3>
+              
+             
+            <Button onClick={() => setCurrentPage('contact')}
+              sx={{
+                width: '200px', 
+                height: '50px',
+                border: 'solid 1px #fff',
+                justifyContent: 'center',
+                alignItems: 'center',
+                '&:hover': {
+                  boxShadow: '0 0 10px #4a90e2, 0 0 20px #4a90e2, 0 0 40px #4a90e2',
+                  border: 'solid 1px #fff'
+                }
+              }}>
+              Share with us!
+            </Button>
+          </div>
           </div>
         )}
         
         {/* About Page */}
         {currentPage === 'about' && (
-          <div className='about-page'>
-            <h1>About Us</h1>
-          </div>
-        )}
-        
+        <div className='about-page'>
+          <h1>About Us</h1>
+
+          <section className='about-intro'>
+            <h2>The Problem</h2>
+            <p>
+              Ever tried adding a stroke outline to an object in a photo?
+              It's either accomplished only by using expensive software or by using sketchy online tools that produce mediocre results.
+            </p>
+          </section>
+
+          <section className='about-solution'>
+            <h2>Our Solution</h2>
+            <p className='highlight-text'>
+              Strokify solves this. It's a Fast, accurate, and completely free option.
+            </p>
+            <p>
+              We provide an accurate, efficient, and quick way to customize photos and apply strokes to objects in images—without the need for advanced image alteration and graphic design software.
+            </p>
+          </section>
+
+          <section className='about-impact'>
+            <h2>Why It Matters</h2>
+            <p>
+              Applying a stroke to an image's object can emphasize and focus on its appearance, giving it direct attraction for viewers.
+            </p>
+            <p>
+              From content creators needing stroked objects for thumbnails, to legitimate companies needing materials for their own projects—Strokify is the solution.
+            </p>
+          </section>
+
+          <Box sx={{ textAlign: 'center', marginTop: '40px' }}>
+            <Button 
+              onClick={() => setCurrentPage('App')}
+              sx={{ 
+                width: '200px', 
+                height: '50px',
+                border: "solid 1px #fff",
+                '&:hover': {
+                  boxShadow: '0 0 10px #4a90e2, 0 0 20px #4a90e2, 0 0 40px #4a90e2',
+                  border: 'solid 1px #fff'
+                }
+              }}
+            >
+              Try Strokify Now
+            </Button>
+          </Box>
+        </div>
+      )}
+
+
+
+
+
         {/* Blog Page */}
         {currentPage === 'blog' && (
           <div className='blog-page'>
             <h1>Blog</h1>
+
+            <section className='blog-section'>
+              <div className='blog-container'>
+                <div className="blog-box">
+                  <div className="blog-content">
+                    <h1>How to use Strokify</h1>
+                    <h2>Devan L</h2>
+                    <img src={fixedkirk} alt="Strokify example" />
+                    <p>A guide detailing how to use Strokify effectively and efficiently.</p>
+                  </div>
+                </div>
+
+             
+              </div>
+            </section>
           </div>
         )}
 
@@ -147,6 +549,12 @@ function App() {
         {currentPage === 'support' && (
           <div className='support-page'>
             <h1>Support</h1>
+            <section>
+              <h2>
+                If you would like to support our project - we would greatly appreciate it!
+              </h2>
+              <h3>We accept Monero donations!</h3>
+            </section>
           </div>
         )}
         {/* privacy */}

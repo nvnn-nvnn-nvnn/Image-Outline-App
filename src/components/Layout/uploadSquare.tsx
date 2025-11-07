@@ -425,7 +425,7 @@ export default function ImageUploadSquare() {
               color="primary"
               onClick={removeBackground}
             >
-              Remove Background
+              Process Image
             </Button>
             <Button 
               variant="outlined" 

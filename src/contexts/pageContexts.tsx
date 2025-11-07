@@ -17,7 +17,7 @@ export const PageContext = createContext({
 
 // 2. Create a Provider component that holds the state
 export function PageProvider({ children }) {
-  const [currentPage, setCurrentPage] = useState('App');
+  const [currentPage, setCurrentPage] = useState('index');
   
   return (
     <PageContext.Provider value={{ currentPage, setCurrentPage }}>

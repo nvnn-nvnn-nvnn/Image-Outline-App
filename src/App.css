@@ -1,4 +1,3 @@
-
 #root {
   max-width: 100vw;
   margin: 0 auto;
@@ -40,32 +39,13 @@
 .card {
   padding: 2em;
 }
-
+  
 .read-the-docs {
   color: #888;
 }
 
 /* Page-specific styles */
-.features-page {
-  padding: 40px;
-  min-height: 100vh;
-  color: #e8eaed;
-}
-
-.features-page h1 {
-  color: #e8eaed;
-  margin-bottom: 20px;
-}
-
-.features-page p {
-  color: #e8eaed;
-}
-
-.home-page {
-  color: #e8eaed;
-}
-
-
+.features-page,
 .terms-page,
 .highlights-page,
 .about-page,
@@ -81,6 +61,10 @@
   margin: auto;
 }
 
+.home-page {
+  color: #e8eaed;
+}
+
 
 /* Index Page CSS Start */
 .index-headers {
@@ -88,27 +72,388 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  margin-top: -20px;
 }
 
-.index-gallery{
-  display: flex;
-  flex-wrap: wrap;
+.index-headers h1 {
+  font-size: 70px;
+  background: linear-gradient(135deg, #fff 0%, #e8eaed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.index-headers h2 {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 400;
+}
+
+.index-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 50px;
-  align-items: center;
+  justify-items: center;
   margin: auto;
   padding: 20px;
-  justify-content: center;
+  max-width: 1200px;
 }
 
+.index-gallery img {
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
+.index-gallery img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.2);
+}
 
+.index-extras {
+  padding: 10px;
+  padding-top: 70px;
+}
 
+.index-extras > * {
+  margin-bottom: 30px;
+}
 
-
+.index-extras h3 {
+  font-size: 1.8rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 25px;
+}
 /* Index Page CSS End */
-.terms-page h1,
-.highlights-page h1,
-.about-page h1,
-.blog-page h1 {
+
+
+/* Features Page CSS Start */
+.features-page {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.features-page h1 {
+  font-size: 3rem;
+  margin-bottom: 30px;
   color: #e8eaed;
 }
+
+.features-page h2 {
+  font-size: 35px;
+  margin: 40px 20px 20px 20px;
+  color: #fff;
+}
+
+.features-page p {
+  font-size: 18px;
+  line-height: 1.7;
+  margin: 20px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.faq-section {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 40px;
+  border-radius: 12px;
+  border-left: 4px solid #fff;
+  margin: 40px 0;
+  text-align: left;
+}
+
+.faq-section h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2rem;
+}
+
+.faq-section p {
+  margin: 15px 0;
+}
+
+.faq-section strong {
+  color: #fff;
+  font-size: 1.1rem;
+}
+/* Features Page CSS End */
+
+
+/* Terms Page CSS Start */
+.terms-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.terms-page h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 50px;
+  color: #e8eaed;
+}
+
+.terms-mat {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.terms-mat ol {
+  list-style-position: inside; 
+  margin-top: 20px;
+  padding: 20px;
+}
+
+.terms-mat ol > li {
+  margin-bottom: 40px;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  border-left: 3px solid rgba(255, 255, 255, 0.3);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.terms-mat ol > li:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-left-color: #fff;
+}
+
+.terms-mat h2 {
+  font-size: 1.6rem;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.terms-mat h3 {
+  font-size: 1.3rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin-top: 20px;
+  margin-bottom: 12px;
+}
+
+.terms-mat h4 {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.terms-mat p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 10px 0;
+}
+
+.terms-mat ul {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.terms-mat ul li {
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+.terms-list {
+  margin: 25px;
+  padding-top: 10px;
+}
+/* Terms Page CSS End */
+
+
+/* Highlights Page CSS Start */
+.highlights-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.highlights-page h1 {
+  text-align: center;
+  font-size: 3rem;
+  padding-bottom: 50px;
+  color: #e8eaed;
+}
+/* Highlights Page CSS End */
+
+
+/* About Page CSS Start */
+.about-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.about-page h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 60px;
+}
+
+.about-page section {
+  margin-bottom: 50px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border-left: 4px solid #fff;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.about-page section:hover {
+  transform: translateX(5px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.about-page h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.about-page p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 15px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.highlight-text {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #fff !important;
+  text-align: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+/* About Page CSS End */
+
+/* Blog Page CSS Start */
+.blog-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.blog-page h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 50px;
+  color: #e8eaed;
+}
+
+.blog-section {
+  margin-top: 40px;
+}
+
+.blog-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin: auto;
+  padding-bottom: 25px;
+}
+
+.blog-box {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 30px;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.blog-box:hover {
+  transform: translateY(-8px);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 30px rgba(74, 144, 226, 0.3);
+  border-color: rgba(74, 144, 226, 0.5);
+}
+
+.blog-content h1 {
+  font-size: 1.8rem;
+  color: #fff;
+  margin-bottom: 15px;
+  text-align: left;
+  text-align: center; 
+}
+
+.blog-content h2 {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 400;
+  margin-bottom: 15px;
+  font-style: italic;
+}
+
+.blog-content p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
+}
+/* Blog Page CSS End */
+
+/* Support Page CSS Start */
+.support-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.support-page h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 50px;
+  color: #e8eaed;
+}
+/* Support Page CSS End */
+
+
+/* Privacy Page CSS Start */
+.privacy-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.privacy-page h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 50px;
+  color: #e8eaed;
+}
+/* Privacy Page CSS End */
+
+
+/* TOS Page CSS Start */
+.tos-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.tos-page h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 50px;
+  color: #e8eaed;
+}
+/* TOS Page CSS End */
+
+
+/* Contact Page CSS Start */
+.contact-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.contact-page h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 50px;
+  color: #e8eaed;
+}
+/* Contact Page CSS End */

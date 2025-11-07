@@ -155,7 +155,7 @@ export default function Footer() {
               </Typography>
               <Stack spacing={1}>
                 <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}
-                onClick={() => setCurrentPage('tos')}>
+                onClick={() => setCurrentPage('terms')}>
                   Terms
                 </Link>
                 <Link href="#" sx={{ color: '#9ca3af', textDecoration: 'none', '&:hover': { color: '#fff' } }}
