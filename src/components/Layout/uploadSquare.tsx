@@ -177,17 +177,24 @@ export default function ImageUploadSquare() {
   }, [user]);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('handleFileSelect called', event);
     const file = event.target.files?.[0];
+    console.log('Selected file:', file);
     if (file && file.type.startsWith('image/')) {
+      console.log('File is valid image, reading...');
       const reader = new FileReader();
       reader.onload = (e) => {
+        console.log('FileReader onload triggered');
         if (typeof e.target?.result === 'string') {
+          console.log('Setting selected image');
           setSelectedImage(e.target.result);
           setProcessedImage(null);
           setError(null);
         }
       };
       reader.readAsDataURL(file);
+    } else {
+      console.log('File is not valid or not an image');
     }
   };
 
@@ -262,8 +269,8 @@ export default function ImageUploadSquare() {
         } else {
           response = null;
         }
-      } catch (e) {
-        console.log('[removeBackground] localhost failed:', e.message);
+      } catch (error: unknown) {
+        console.log('[removeBackground] localhost failed:', (error as Error).message);
         response = null;
       }
 
@@ -278,7 +285,7 @@ export default function ImageUploadSquare() {
           } else {
             response = null;
           }
-        } catch (e) {
+        } catch (e: any) {
           console.log('[removeBackground] Vercel failed:', e.message);
           response = null;
         }
@@ -286,13 +293,13 @@ export default function ImageUploadSquare() {
 
       // 3. Try environment variable URL as fallback
       if (!response) {
-        const API_BASE = import.meta.env.VITE_API_URL;
+        const API_BASE = (import.meta as any).env.VITE_API_URL;
         if (API_BASE) {
           try {
             const envUrl = `${API_BASE}/api/remove-background`;
             console.log('[removeBackground] trying env URL:', envUrl);
             response = await fetch(envUrl, payload);
-          } catch (e) {
+          } catch (e: any) {
             console.log('[removeBackground] env URL failed:', e.message);
           }
         }
