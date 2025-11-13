@@ -16,8 +16,16 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
+console.log("Initializing Firebase with config:", firebaseConfig);
 const app = initializeApp(firebaseConfig);
+console.log("Firebase app initialized:", app);
+
 const analytics = getAnalytics(app);
 export const auth = getAuth(app);
+console.log("Firebase auth initialized:", auth);
+
 export const googleProvider = new GoogleAuthProvider();
+console.log("Google provider created:", googleProvider);
+
 export const db = getFirestore(app);
+console.log("Firestore initialized:", db);
