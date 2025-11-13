@@ -1,11 +1,37 @@
 // Netlify function using CommonJS (Netlify compatible)
-// Use global fetch if available (Node 18+), otherwise fallback to node-fetch
-const fetch = globalThis.fetch || require('node-fetch');
+// Import https module for making API calls
+const https = require('https');
 
 const MAX_FREE_USES = 3;
 const usageMap = new Map(); // key -> { date: 'YYYY-MM-DD', count }
 
 const todayUTC = () => new Date().toISOString().split('T')[0];
+
+// Helper function to make HTTPS requests
+function makeHttpsRequest(url, options) {
+  return new Promise((resolve, reject) => {
+    const req = https.request(url, options, (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        resolve({
+          status: res.statusCode,
+          ok: res.statusCode >= 200 && res.statusCode < 300,
+          arrayBuffer: () => Promise.resolve(Buffer.from(data, 'binary')),
+          text: () => Promise.resolve(data)
+        });
+      });
+    });
+    
+    req.on('error', reject);
+    
+    if (options.body) {
+      req.write(options.body);
+    }
+    
+    req.end();
+  });
+}
 
 /**
  * Get current usage status for a user without incrementing
@@ -130,7 +156,7 @@ exports.handler = async (event, context) => {
     const base64Data = imageData.replace(/^data:image\/\w+;base64,/, '');
 
     // ----- 4. REMOVE.BG -----
-    const removeBgRes = await fetch('https://api.remove.bg/v1.0/removebg', {
+    const removeBgRes = await makeHttpsRequest('https://api.remove.bg/v1.0/removebg', {
       method: 'POST',
       headers: {
         'X-Api-Key': apiKey,
