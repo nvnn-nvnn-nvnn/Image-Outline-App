@@ -249,19 +249,53 @@ export default function ImageUploadSquare() {
         body: JSON.stringify({ imageData: selectedImage }),
       };
 
-      // Use Vercel API URL for production, localhost for development
-      const API_BASE = import.meta.env.VITE_API_URL || 'https://image-outline-app.vercel.app';
-      const apiUrl = `${API_BASE}/api/remove-background`;
+      // Try multiple API endpoints in order
+      console.log('[removeBackground] attempting API call...');
+      let response = null;
       
-      console.log('[removeBackground] sending request to:', apiUrl);
-      let response = await fetch(apiUrl, payload).catch((e) => {
-        console.error('[removeBackground] API request failed:', e);
-        return null;
-      });
-
-      if (!response || response.status === 404) {
-        console.log('[removeBackground] trying fallback localhost');
+      // 1. Try localhost first (for development)
+      try {
+        console.log('[removeBackground] trying localhost...');
         response = await fetch('http://localhost:3000/api/remove-background', payload);
+        if (response && response.ok) {
+          console.log('[removeBackground] localhost success');
+        } else {
+          response = null;
+        }
+      } catch (e) {
+        console.log('[removeBackground] localhost failed:', e.message);
+        response = null;
+      }
+
+      // 2. Try Vercel deployment if localhost failed
+      if (!response) {
+        try {
+          const vercelUrl = 'https://image-outline-8u1dr7y88-vdddvdddvddds-projects.vercel.app/api/remove-background';
+          console.log('[removeBackground] trying Vercel:', vercelUrl);
+          response = await fetch(vercelUrl, payload);
+          if (response && response.ok) {
+            console.log('[removeBackground] Vercel success');
+          } else {
+            response = null;
+          }
+        } catch (e) {
+          console.log('[removeBackground] Vercel failed:', e.message);
+          response = null;
+        }
+      }
+
+      // 3. Try environment variable URL as fallback
+      if (!response) {
+        const API_BASE = import.meta.env.VITE_API_URL;
+        if (API_BASE) {
+          try {
+            const envUrl = `${API_BASE}/api/remove-background`;
+            console.log('[removeBackground] trying env URL:', envUrl);
+            response = await fetch(envUrl, payload);
+          } catch (e) {
+            console.log('[removeBackground] env URL failed:', e.message);
+          }
+        }
       }
 
       if (!response) throw new Error('API not reachable');
