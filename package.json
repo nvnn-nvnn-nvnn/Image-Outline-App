@@ -8,7 +8,7 @@
     "dev:api": "nodemon server/dev-server.mjs",
     "dev:all": "concurrently \"npm run dev\" \"npm run dev:api\"",
     "build": "vite build",
-    "start": "node server",
+    "start": "node server/dev-server.mjs",
     "lint": "eslint .",
     "preview": "vite preview --port 8080",
     "dev:full": "vercel dev",

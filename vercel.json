@@ -24,7 +24,8 @@
     }
   ],
   "env": {
-    "REMOVE_BG_API_KEY": "@remove_bg_api_key"
+    "REMOVE_BG_API_KEY": "@remove_bg_api_key",
+    "WEB3FORMS_API_KEY": "@web3forms_api_key"
   },
   "rewrites": [{
     "source": "/(.*)",

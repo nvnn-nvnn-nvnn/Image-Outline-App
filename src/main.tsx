@@ -5,6 +5,7 @@ import { StyledEngineProvider, ThemeProvider, createTheme } from '@mui/material/
 import './index.css'
 import App from './App'
 import { PageProvider } from './contexts/pageContexts';
+import { AuthProvider } from './contexts/authContexts';
 
 const theme = createTheme({
   palette: {
@@ -27,11 +28,14 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
-
+      <AuthProvider>
         <PageProvider>
 
           <App />
         </PageProvider>
+
+      </AuthProvider>
+     
          
       </ThemeProvider>
     </StyledEngineProvider>

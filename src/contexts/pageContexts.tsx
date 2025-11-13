@@ -6,17 +6,20 @@ import '../App.css'
 
 import { createContext, useState } from 'react';
 
+export interface PageContextType {
+  currentPage: string;
+  setCurrentPage: React.Dispatch<React.SetStateAction<string>>;
+}
+
 // 1. Create the context
-export const PageContext = createContext({
-
-    currentPage: "App",
-    setCurrentPage: () => {}
-
+export const PageContext = createContext<PageContextType>({
+  currentPage: "App",
+  setCurrentPage: () => {},
 });
 
 
 // 2. Create a Provider component that holds the state
-export function PageProvider({ children }) {
+export function PageProvider({ children }: { children: React.ReactNode }) {
   const [currentPage, setCurrentPage] = useState('index');
   
   return (

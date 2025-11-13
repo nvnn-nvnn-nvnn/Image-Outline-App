@@ -1,130 +1,124 @@
-// api/remove-background.js
-import FormData from 'form-data';
-// Node.js 18+ has built-in fetch, no need to import node-fetch
+// Express-compatible handler (ESM)
+
+const MAX_FREE_USES = 3;
+const usageMap = new Map(); // key -> { date: 'YYYY-MM-DD', count }
+
+const todayUTC = () => new Date().toISOString().split('T')[0];
+
+/**
+ * Get current usage status for a user without incrementing
+ * @param {string} usageKey - User identifier (token, IP, etc.)
+ * @returns {{remaining: number, used: number, limit: number}}
+ */
+export function getUsageStatus(usageKey) {
+  const today = todayUTC();
+  const entry = usageMap.get(usageKey) || { date: today, count: 0 };
+  
+  // Reset if different day
+  if (entry.date !== today) {
+    entry.date = today;
+    entry.count = 0;
+  }
+  
+  const isPro = process.env.FREE_LIMIT_DISABLED === '1';
+  const used = entry.count;
+  const remaining = isPro ? 999 : Math.max(0, MAX_FREE_USES - used);
+  
+  return {
+    remaining,
+    used,
+    limit: isPro ? 999 : MAX_FREE_USES
+  };
+}
 
 export default async function handler(req, res) {
-  // Set CORS headers - crucial for frontend communication
+  // ----- CORS -----
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-  // Handle preflight OPTIONS request
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  // Only allow POST requests
-  if (req.method !== 'POST') {
-    return res.status(405).json({ 
-      success: false,
-      error: 'Method not allowed' 
-    });
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST')
+    return res.status(405).json({ success: false, error: 'Method not allowed' });
 
   try {
-    console.log('📥 Received image processing request');
-    
-    // Get the image data from the request
-    const { imageData } = req.body;
-    
+    // ----- 1. AUTH (lightweight) -----
+    // Expect a Firebase ID token from client. We do not verify here to avoid server deps.
+    // For production, verify with firebase-admin.
+    const authHeader = req.headers.authorization || '';
+    if (!authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ success: false, error: 'Unauthorized – please log in' });
+    }
+
+    // Use token as usage key; fallback to IP if missing
+    const token = authHeader.slice('Bearer '.length).trim();
+    const usageKey = token || req.ip || 'anonymous';
+
+    // ----- 2. USAGE CHECK -----
+    const today = todayUTC();
+    const entry = usageMap.get(usageKey) || { date: today, count: 0 };
+    if (entry.date !== today) {
+      entry.date = today;
+      entry.count = 0;
+    }
+
+    // Allow unlimited if explicitly set via env (e.g., PRO mode) else enforce cap
+    const isPro = process.env.FREE_LIMIT_DISABLED === '1';
+    if (!isPro && entry.count >= MAX_FREE_USES) {
+      return res.status(403).json({
+        success: false,
+        error: `Free limit reached – ${MAX_FREE_USES} daily tries used.`,
+        remaining: 0,
+      });
+    }
+
+    // ----- 3. IMAGE -----
+    const { imageData } = req.body || {};
     if (!imageData) {
-      return res.status(400).json({ 
-        success: false,
-        error: 'No image data provided' 
-      });
+      return res.status(400).json({ success: false, error: 'No image data provided' });
     }
 
-    // Get API key from environment
     const apiKey = process.env.REMOVE_BG_API_KEY;
-    
     if (!apiKey) {
-      console.error('❌ API key not configured');
-      return res.status(500).json({ 
-        success: false,
-        error: 'API key not configured. Please set REMOVE_BG_API_KEY in .env file' 
-      });
+      return res.status(500).json({ success: false, error: 'REMOVE_BG_API_KEY not configured' });
     }
 
-    // Remove the data:image/... prefix to get pure base64
     const base64Data = imageData.replace(/^data:image\/\w+;base64,/, '');
-    
-    // Convert base64 to buffer (Node.js way)
-    const imageBuffer = Buffer.from(base64Data, 'base64');
 
-    console.log('🔄 Sending request to Remove.bg API...');
-    console.log('📊 Image data size:', Math.round(base64Data.length / 1024), 'KB');
-    console.log('🔑 API Key present:', apiKey ? 'Yes' : 'No');
-    console.log('🔑 API Key length:', apiKey?.length);
-
-    // Try using JSON with base64 (more reliable than FormData)
-    const removeBgResponse = await fetch('https://api.remove.bg/v1.0/removebg', {
+    // ----- 4. REMOVE.BG -----
+    const removeBgRes = await fetch('https://api.remove.bg/v1.0/removebg', {
       method: 'POST',
       headers: {
         'X-Api-Key': apiKey,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        image_file_b64: base64Data,
-        size: 'auto'
-      })
+      body: JSON.stringify({ image_file_b64: base64Data, size: 'auto' }),
     });
-    
-    console.log('📡 Remove.bg response status:', removeBgResponse.status);
 
-    if (!removeBgResponse.ok) {
-      let errorText;
-      try {
-        errorText = await removeBgResponse.text();
-      } catch (e) {
-        errorText = 'Could not read error response';
-      }
-      
-      console.error('❌ Remove.bg API error!');
-      console.error('   Status:', removeBgResponse.status);
-      console.error('   Status Text:', removeBgResponse.statusText);
-      console.error('   Response:', errorText);
-      console.error('   Headers:', Object.fromEntries(removeBgResponse.headers.entries()));
-      
-      let errorMessage = 'Failed to remove background';
-      
-      if (removeBgResponse.status === 403) {
-        errorMessage = 'Invalid API key or insufficient credits. Check your API key at https://www.remove.bg/api';
-      } else if (removeBgResponse.status === 400) {
-        errorMessage = 'Invalid image format or corrupt image data';
-      } else if (removeBgResponse.status === 402) {
-        errorMessage = 'Insufficient API credits. Check your balance at https://www.remove.bg/users/balance';
-      } else if (removeBgResponse.status === 429) {
-        errorMessage = 'Rate limit exceeded. Please wait before trying again.';
-      }
-      
-      return res.status(removeBgResponse.status).json({
-        success: false,
-        error: errorMessage,
-        details: errorText
-      });
+    if (!removeBgRes.ok) {
+      let errBody = '';
+      try { errBody = await removeBgRes.text(); } catch {}
+      const msg =
+        removeBgRes.status === 403 ? 'Invalid API key' :
+        removeBgRes.status === 402 ? 'No credits' :
+        removeBgRes.status === 429 ? 'Rate limited' :
+        'Remove.bg error';
+      return res.status(removeBgRes.status).json({ success: false, error: msg, details: errBody });
     }
 
-    // Get the processed image as ArrayBuffer
-    const resultBuffer = await removeBgResponse.arrayBuffer();
-    
-    // Convert to base64 for easy frontend consumption
+    const resultBuffer = await removeBgRes.arrayBuffer();
     const resultBase64 = Buffer.from(resultBuffer).toString('base64');
-    const resultDataUrl = `data:image/png;base64,${resultBase64}`;
+    const processedImage = `data:image/png;base64,${resultBase64}`;
 
-    console.log('✅ Image processed successfully!');
+    // ----- 5. INCREMENT USAGE -----
+    entry.count += 1;
+    usageMap.set(usageKey, entry);
 
-    // Send back the processed image
-    res.status(200).json({
-      success: true,
-      processedImage: resultDataUrl,
-      message: 'Background removed successfully'
-    });
-
-  } catch (error) {
-    console.error('💥 Error processing image:', error.message);
-    res.status(500).json({
-      success: false,
-      error: error.message || 'Internal server error'
-    });
+    // ----- 6. SUCCESS -----
+    const remaining = isPro ? null : Math.max(0, MAX_FREE_USES - entry.count);
+    return res.status(200).json({ success: true, processedImage, remaining });
+  } catch (err) {
+    console.error('remove-background error:', err);
+    return res.status(500).json({ success: false, error: err?.message || 'Server error' });
   }
 }
