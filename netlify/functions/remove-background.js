@@ -1,4 +1,6 @@
 // Netlify function using CommonJS (Netlify compatible)
+// Use global fetch if available (Node 18+), otherwise fallback to node-fetch
+const fetch = globalThis.fetch || require('node-fetch');
 
 const MAX_FREE_USES = 3;
 const usageMap = new Map(); // key -> { date: 'YYYY-MM-DD', count }
@@ -169,10 +171,20 @@ exports.handler = async (event, context) => {
     };
   } catch (err) {
     console.error('remove-background error:', err);
+    console.error('Error stack:', err.stack);
+    console.error('Error details:', {
+      message: err.message,
+      name: err.name,
+      code: err.code
+    });
     return {
       statusCode: 500,
       headers: corsHeaders,
-      body: JSON.stringify({ success: false, error: err?.message || 'Server error' })
+      body: JSON.stringify({ 
+        success: false, 
+        error: err?.message || 'Server error',
+        details: process.env.NODE_ENV === 'development' ? err.stack : undefined
+      })
     };
   }
 }
