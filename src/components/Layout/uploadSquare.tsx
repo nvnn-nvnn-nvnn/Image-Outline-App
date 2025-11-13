@@ -249,16 +249,19 @@ export default function ImageUploadSquare() {
         body: JSON.stringify({ imageData: selectedImage }),
       };
 
-      console.log('[removeBackground] sending request to /.netlify/functions/remove-background');
-      let response = await fetch('/.netlify/functions/remove-background', payload).catch((e) => {
-        console.error('[removeBackground] primary request failed:', e);
+      // Use Vercel API URL for production, localhost for development
+      const API_BASE = import.meta.env.VITE_API_URL || 'https://image-outline-app.vercel.app';
+      const apiUrl = `${API_BASE}/api/remove-background`;
+      
+      console.log('[removeBackground] sending request to:', apiUrl);
+      let response = await fetch(apiUrl, payload).catch((e) => {
+        console.error('[removeBackground] API request failed:', e);
         return null;
       });
 
       if (!response || response.status === 404) {
-        console.log('[removeBackground] trying fallback http://localhost:3000/api/remove-background');
-        const API_BASE = import.meta.env.VITE_API_URL || '';
-        response = await fetch(`${API_BASE}/api/remove-background`, payload);
+        console.log('[removeBackground] trying fallback localhost');
+        response = await fetch('http://localhost:3000/api/remove-background', payload);
       }
 
       if (!response) throw new Error('API not reachable');
