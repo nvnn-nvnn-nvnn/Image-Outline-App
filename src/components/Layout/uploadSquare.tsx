@@ -257,10 +257,8 @@ export default function ImageUploadSquare() {
 
       if (!response || response.status === 404) {
         console.log('[removeBackground] trying fallback http://localhost:3000/api/remove-background');
-        response = await fetch('http://localhost:3000/api/remove-background', payload).catch((e) => {
-          console.error('[removeBackground] fallback request failed:', e);
-          return null;
-        });
+        const API_BASE = import.meta.env.VITE_API_URL || '';
+        const response = await fetch(`${API_BASE}/api/remove-background`, payload);
       }
 
       if (!response) throw new Error('API not reachable');
