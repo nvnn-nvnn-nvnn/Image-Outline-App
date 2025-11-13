@@ -13,22 +13,10 @@
       }
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/((?!api).*)",
+      "destination": "/index.html"
     }
-  ],
-  "env": {
-    "REMOVE_BG_API_KEY": "@remove_bg_api_key",
-    "WEB3FORMS_API_KEY": "@web3forms_api_key"
-  },
-  "rewrites": [{
-    "source": "/(.*)",
-    "destination": "/"
-  }]
+  ]
 }
