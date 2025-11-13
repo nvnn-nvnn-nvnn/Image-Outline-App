@@ -1,15 +1,10 @@
-require('dotenv').config();
+// Netlify function using ES modules (compatible with local API)
+import { Buffer } from 'buffer';
 
 const MAX_FREE_USES = 3;
 const usageMap = new Map(); // key -> { date: 'YYYY-MM-DD', count }
 
 const todayUTC = () => new Date().toISOString().split('T')[0];
-
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-};
 
 /**
  * Get current usage status for a user without incrementing
@@ -37,7 +32,14 @@ export function getUsageStatus(usageKey) {
   };
 }
 
-exports.handler = async (event) => {
+// Netlify function handler
+export default async function handler(event, context) {
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  };
+
   // Handle OPTIONS requests
   if (event.httpMethod === 'OPTIONS') {
     return {
@@ -57,23 +59,20 @@ exports.handler = async (event) => {
   }
 
   try {
-    // Parse request body
+    // ----- 1. AUTH (lightweight) -----
     const authHeader = event.headers.authorization || event.headers.Authorization || '';
-    
+    if (!authHeader.startsWith('Bearer ')) {
+      return {
+        statusCode: 401,
+        headers: corsHeaders,
+        body: JSON.stringify({ success: false, error: 'Unauthorized – please log in' })
+      };
+    }
+
     // Use token as usage key; fallback to IP if missing
     const token = authHeader.slice('Bearer '.length).trim();
     const ip = event.headers['client-ip'] || event.headers['x-nf-client-connection-ip'] || '';
     const usageKey = token || ip || 'anonymous';
-
-    // Validate content-type
-    const contentType = event.headers['content-type'] || event.headers['Content-Type'];
-    if (contentType !== 'application/json') {
-      return {
-        statusCode: 415,
-        headers: corsHeaders,
-        body: JSON.stringify({ success: false, error: 'Unsupported media type. Use application/json' })
-      };
-    }
 
     // ----- 2. USAGE CHECK -----
     const today = todayUTC();
@@ -98,49 +97,25 @@ exports.handler = async (event) => {
     }
 
     // ----- 3. IMAGE -----
-    let imageData;
+    let bodyData;
     try {
-      const bodyJson = event.body ? JSON.parse(event.body) : {};
-      imageData = bodyJson.imageData;
+      bodyData = event.body ? JSON.parse(event.body) : {};
     } catch (e) {
       return {
         statusCode: 400,
         headers: corsHeaders,
-        body: JSON.stringify({ success: false, error: 'Invalid request body format' })
+        body: JSON.stringify({ success: false, error: 'Invalid JSON in request body' })
       };
     }
 
+    const { imageData } = bodyData;
     if (!imageData) {
-      console.log('No imageData provided. Request body:', event.body);
       return {
         statusCode: 400,
         headers: corsHeaders,
-        body: JSON.stringify({ 
-          success: false, 
-          error: 'No image data provided. Please send a JSON object with "imageData" field containing base64 image.'
-        })
+        body: JSON.stringify({ success: false, error: 'No image data provided' })
       };
     }
-
-    // Also support plain base64 without content type
-    if (!imageData.startsWith('data:image')) {
-      // Assume it's raw base64 and prepend the content type
-      imageData = `data:image/png;base64,${imageData}`;
-    }
-
-    // TEMPORARILY REMOVE VALIDATION FOR DEBUGGING
-    // const base64Regex = /^data:image\/\w+;base64,[a-zA-Z0-9+/]+={0,2}$/;
-    // if (!base64Regex.test(imageData)) {
-    //   console.log('Invalid base64 format. imageData:', imageData.substring(0, 100) + '...');
-    //   return {
-    //     statusCode: 400,
-    //     headers: corsHeaders,
-    //     body: JSON.stringify({ 
-    //       success: false, 
-    //       error: `Invalid image format. Use base64-encoded images. Received: ${imageData.substring(0, 50)}...`
-    //     })
-    //   };
-    // }
 
     const apiKey = process.env.REMOVE_BG_API_KEY;
     if (!apiKey) {
@@ -151,14 +126,7 @@ exports.handler = async (event) => {
       };
     }
 
-    // Handle different base64 formats
-    let base64Data;
-    if (imageData.startsWith('data:image')) {
-      base64Data = imageData.replace(/^data:image\/\w+;base64,/, '');
-    } else {
-      // Assume it's raw base64
-      base64Data = imageData;
-    }
+    const base64Data = imageData.replace(/^data:image\/\w+;base64,/, '');
 
     // ----- 4. REMOVE.BG -----
     const removeBgRes = await fetch('https://api.remove.bg/v1.0/removebg', {
@@ -172,9 +140,7 @@ exports.handler = async (event) => {
 
     if (!removeBgRes.ok) {
       let errBody = '';
-      try { 
-        errBody = await removeBgRes.text(); 
-      } catch (e) {}
+      try { errBody = await removeBgRes.text(); } catch {}
       const msg =
         removeBgRes.status === 403 ? 'Invalid API key' :
         removeBgRes.status === 402 ? 'No credits' :
@@ -204,11 +170,10 @@ exports.handler = async (event) => {
     };
   } catch (err) {
     console.error('remove-background error:', err);
-    console.error('Request body:', event.body);
     return {
       statusCode: 500,
       headers: corsHeaders,
       body: JSON.stringify({ success: false, error: err?.message || 'Server error' })
     };
   }
-};
+}
