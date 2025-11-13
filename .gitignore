@@ -62,3 +62,7 @@ pids
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Executable files
+*.exe
+*.msi
