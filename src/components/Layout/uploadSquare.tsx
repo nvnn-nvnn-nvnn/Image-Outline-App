@@ -249,8 +249,8 @@ export default function ImageUploadSquare() {
         body: JSON.stringify({ imageData: selectedImage }),
       };
 
-      console.log('[removeBackground] sending request to /api/remove-background');
-      let response = await fetch('/api/remove-background', payload).catch((e) => {
+      console.log('[removeBackground] sending request to /.netlify/functions/remove-background');
+      let response = await fetch('/.netlify/functions/remove-background', payload).catch((e) => {
         console.error('[removeBackground] primary request failed:', e);
         return null;
       });
@@ -258,7 +258,7 @@ export default function ImageUploadSquare() {
       if (!response || response.status === 404) {
         console.log('[removeBackground] trying fallback http://localhost:3000/api/remove-background');
         const API_BASE = import.meta.env.VITE_API_URL || '';
-        const response = await fetch(`${API_BASE}/api/remove-background`, payload);
+        response = await fetch(`${API_BASE}/api/remove-background`, payload);
       }
 
       if (!response) throw new Error('API not reachable');
