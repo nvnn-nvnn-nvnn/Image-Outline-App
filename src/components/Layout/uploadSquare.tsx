@@ -532,9 +532,19 @@ export default function ImageUploadSquare() {
             <Typography variant="body2" color="#fff" sx={{ mb: 2 }}>
               or
             </Typography>
-            <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
+            <Button 
+              component="label" 
+              variant="contained" 
+              startIcon={<CloudUploadIcon />}
+              onClick={() => console.log('Button clicked!')}
+            >
               Select Image
-              <VisuallyHiddenInput type="file" accept="image/*" onChange={handleFileSelect} />
+              <VisuallyHiddenInput 
+                type="file" 
+                accept="image/*" 
+                onChange={handleFileSelect}
+                onClick={() => console.log('File input clicked!')}
+              />
             </Button>
           </Box>
         )}
