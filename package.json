@@ -23,7 +23,7 @@
     "@radix-ui/themes": "^3.2.1",
     "axios": "^1.13.1",
     "cors": "^2.8.5",
-    "dotenv": "^17.2.3",
+    "dotenv": "^16.6.1",
     "express": "^5.1.0",
     "fabric": "^6.7.1",
     "firebase": "^12.5.0",
