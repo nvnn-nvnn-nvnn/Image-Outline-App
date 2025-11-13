@@ -10,10 +10,7 @@
 
 [functions]
   node_bundler = "esbuild"
-  [functions.timeout]
-    default = 30
-  [functions.environment]
-    NODE_OPTIONS = "--experimental-modules"
+  timeout = 30
 
 [context.production]
   environment = { NODE_VERSION = "18" }

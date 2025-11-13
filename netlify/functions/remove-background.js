@@ -1,5 +1,4 @@
-// Netlify function using ES modules (compatible with local API)
-import { Buffer } from 'buffer';
+// Netlify function using CommonJS (Netlify compatible)
 
 const MAX_FREE_USES = 3;
 const usageMap = new Map(); // key -> { date: 'YYYY-MM-DD', count }
@@ -11,7 +10,7 @@ const todayUTC = () => new Date().toISOString().split('T')[0];
  * @param {string} usageKey - User identifier (token, IP, etc.)
  * @returns {{remaining: number, used: number, limit: number}}
  */
-export function getUsageStatus(usageKey) {
+function getUsageStatus(usageKey) {
   const today = todayUTC();
   const entry = usageMap.get(usageKey) || { date: today, count: 0 };
   
@@ -33,7 +32,7 @@ export function getUsageStatus(usageKey) {
 }
 
 // Netlify function handler
-export default async function handler(event, context) {
+exports.handler = async (event, context) => {
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
