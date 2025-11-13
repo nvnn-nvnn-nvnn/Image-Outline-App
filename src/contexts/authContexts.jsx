@@ -15,6 +15,10 @@ export const AuthProvider = ({ children }) => {
   const signInWithGoogle = async () => {
     try {
       console.log("Attempting sign in...");
+      console.log("Auth object:", auth);
+      console.log("Google provider:", googleProvider);
+      console.log("Current domain:", window.location.hostname);
+      
       const result = await signInWithPopup(auth, googleProvider);
       console.log("Sign in successful:", result.user);
       return result.user;
@@ -22,6 +26,17 @@ export const AuthProvider = ({ children }) => {
       console.error("Error signing in:", error);
       console.error("Error code:", error.code);
       console.error("Error message:", error.message);
+      console.error("Full error object:", error);
+      
+      // Common Firebase auth errors
+      if (error.code === 'auth/unauthorized-domain') {
+        console.error("DOMAIN NOT AUTHORIZED: Add your domain to Firebase Console");
+      } else if (error.code === 'auth/popup-closed-by-user') {
+        console.error("POPUP CLOSED: User closed the popup");
+      } else if (error.code === 'auth/popup-blocked') {
+        console.error("POPUP BLOCKED: Browser blocked the popup");
+      }
+      
       throw error;
     }
   };
