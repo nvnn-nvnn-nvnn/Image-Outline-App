@@ -14,12 +14,9 @@
 
 [context.production]
   environment = { NODE_VERSION = "18" }
-  functions = { timeout = 30 }
 
 [context.deploy-preview]
   environment = { NODE_VERSION = "18" }
-  functions = { timeout = 30 }
 
 [context.branch-deploy]
   environment = { NODE_VERSION = "18" }
-  functions = { timeout = 30 }
