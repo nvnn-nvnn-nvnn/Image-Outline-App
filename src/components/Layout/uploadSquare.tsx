@@ -256,52 +256,37 @@ export default function ImageUploadSquare() {
         body: JSON.stringify({ imageData: selectedImage }),
       };
 
-      // Try multiple API endpoints in order
+      // Try API endpoints in order
       console.log('[removeBackground] attempting API call...');
       let response = null;
       
-      // 1. Try localhost first (for development)
+      // 1. Try Netlify function (production)
       try {
-        console.log('[removeBackground] trying localhost...');
-        response = await fetch('http://localhost:3000/api/remove-background', payload);
+        console.log('[removeBackground] trying Netlify function...');
+        response = await fetch('/.netlify/functions/remove-background', payload);
         if (response && response.ok) {
-          console.log('[removeBackground] localhost success');
+          console.log('[removeBackground] Netlify function success');
         } else {
           response = null;
         }
       } catch (error: unknown) {
-        console.log('[removeBackground] localhost failed:', (error as Error).message);
+        console.log('[removeBackground] Netlify function failed:', (error as Error).message);
         response = null;
       }
 
-      // 2. Try Vercel deployment if localhost failed
+      // 2. Try localhost (for development)
       if (!response) {
         try {
-          const vercelUrl = 'https://image-outline-papa3lhtz-vdddvdddvddds-projects.vercel.app/api/remove-background';
-          console.log('[removeBackground] trying Vercel:', vercelUrl);
-          response = await fetch(vercelUrl, payload);
+          console.log('[removeBackground] trying localhost...');
+          response = await fetch('http://localhost:3000/api/remove-background', payload);
           if (response && response.ok) {
-            console.log('[removeBackground] Vercel success');
+            console.log('[removeBackground] localhost success');
           } else {
             response = null;
           }
         } catch (e: any) {
-          console.log('[removeBackground] Vercel failed:', e.message);
+          console.log('[removeBackground] localhost failed:', e.message);
           response = null;
-        }
-      }
-
-      // 3. Try environment variable URL as fallback
-      if (!response) {
-        const API_BASE = (import.meta as any).env.VITE_API_URL;
-        if (API_BASE) {
-          try {
-            const envUrl = `${API_BASE}/api/remove-background`;
-            console.log('[removeBackground] trying env URL:', envUrl);
-            response = await fetch(envUrl, payload);
-          } catch (e: any) {
-            console.log('[removeBackground] env URL failed:', e.message);
-          }
         }
       }
 
