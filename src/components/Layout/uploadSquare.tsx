@@ -277,7 +277,7 @@ export default function ImageUploadSquare() {
       // 2. Try Vercel deployment if localhost failed
       if (!response) {
         try {
-          const vercelUrl = 'https://image-outline-id4l49viu-vdddvdddvddds-projects.vercel.app/api/remove-background';
+          const vercelUrl = 'https://image-outline-papa3lhtz-vdddvdddvddds-projects.vercel.app/api/remove-background';
           console.log('[removeBackground] trying Vercel:', vercelUrl);
           response = await fetch(vercelUrl, payload);
           if (response && response.ok) {

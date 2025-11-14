@@ -8,12 +8,12 @@
   ],
   "routes": [
     {
-      "src": "/",
-      "dest": "/"
+      "src": "/api/(.*)",
+      "dest": "/server/dev-server.mjs"
     },
     {
-      "src": "/api",
-      "dest": "/"
+      "src": "/(.*)",
+      "dest": "/dist/$1"
     }
   ],
   "env": {
