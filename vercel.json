@@ -18,5 +18,8 @@
       "source": "/((?!api).*)",
       "destination": "/index.html"
     }
-  ]
+  ],
+  "env": {
+    "REMOVE_BG_API_KEY": "HEbMXANwLV5B7fe4c6ouNimb"
+  }
 }

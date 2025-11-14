@@ -277,7 +277,7 @@ export default function ImageUploadSquare() {
       // 2. Try Vercel deployment if localhost failed
       if (!response) {
         try {
-          const vercelUrl = 'https://image-outline-hiqai12t8-vdddvdddvddds-projects.vercel.app/api/remove-background';
+          const vercelUrl = 'https://image-outline-c0geyker2-vdddvdddvddds-projects.vercel.app/api/remove-background';
           console.log('[removeBackground] trying Vercel:', vercelUrl);
           response = await fetch(vercelUrl, payload);
           if (response && response.ok) {
@@ -532,19 +532,9 @@ export default function ImageUploadSquare() {
             <Typography variant="body2" color="#fff" sx={{ mb: 2 }}>
               or
             </Typography>
-            <Button 
-              component="label" 
-              variant="contained" 
-              startIcon={<CloudUploadIcon />}
-              onClick={() => console.log('Button clicked!')}
-            >
+            <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
               Select Image
-              <VisuallyHiddenInput 
-                type="file" 
-                accept="image/*" 
-                onChange={handleFileSelect}
-                onClick={() => console.log('File input clicked!')}
-              />
+              <VisuallyHiddenInput type="file" accept="image/*" onChange={handleFileSelect} />
             </Button>
           </Box>
         )}
