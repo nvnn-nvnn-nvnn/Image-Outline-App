@@ -258,19 +258,15 @@ export default function ImageUploadSquare() {
 
       // Try API endpoints in order
       console.log('[removeBackground] attempting API call...');
-      let response = null;
+      let response: Response | null = null;
       
       // 1. Try Netlify function (production)
       try {
         console.log('[removeBackground] trying Netlify function...');
-        response = await fetch('/.netlify/functions/remove-background', payload);
-        if (response && response.ok) {
-          console.log('[removeBackground] Netlify function success');
-        } else {
-          response = null;
-        }
+        response = await fetch('/.netlify/functions/removeBg', payload);
+        console.log('[removeBackground] Netlify function status:', response.status);
       } catch (error: unknown) {
-        console.log('[removeBackground] Netlify function failed:', (error as Error).message);
+        console.log('[removeBackground] Netlify function network error:', (error as Error).message);
         response = null;
       }
 
@@ -279,13 +275,9 @@ export default function ImageUploadSquare() {
         try {
           console.log('[removeBackground] trying localhost...');
           response = await fetch('http://localhost:3000/api/remove-background', payload);
-          if (response && response.ok) {
-            console.log('[removeBackground] localhost success');
-          } else {
-            response = null;
-          }
+          console.log('[removeBackground] localhost status:', response.status);
         } catch (e: any) {
-          console.log('[removeBackground] localhost failed:', e.message);
+          console.log('[removeBackground] localhost network error:', e.message);
           response = null;
         }
       }

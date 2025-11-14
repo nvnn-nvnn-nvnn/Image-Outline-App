@@ -63,3 +63,7 @@ Thumbs.db
 # Executable files
 *.exe
 *.msi
+# Local Netlify folder
+.netlify
+
+.vercel
