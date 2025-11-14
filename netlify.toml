@@ -1,7 +1,7 @@
 [build]
   command = "npm run build"
   publish = "dist"
-  functions = "functions"
+  functions = "netlify/functions"
 
 [build.environment]
   REMOVE_BG_API_KEY = "HEbMXANwLV5B7fe4c6ouNimb"
