@@ -153,7 +153,9 @@ export default function ImageUploadSquare() {
 
       try {
         const token = await user.getIdToken();
-        const response = await fetch('/.netlify/functions/usage-status', {
+        const isViteDev = typeof window !== 'undefined' && window.location.port === '5173';
+        const usageUrl = isViteDev ? '/api/usage-status' : '/.netlify/functions/usage-status';
+        const response = await fetch(usageUrl, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`
@@ -259,25 +261,27 @@ export default function ImageUploadSquare() {
       // Try API endpoints in order
       console.log('[removeBackground] attempting API call...');
       let response: Response | null = null;
-      
-      // 1. Try Netlify function (production)
-      try {
-        console.log('[removeBackground] trying Netlify function...');
-        response = await fetch('/.netlify/functions/removeBg', payload);
-        console.log('[removeBackground] Netlify function status:', response.status);
-      } catch (error: unknown) {
-        console.log('[removeBackground] Netlify function network error:', (error as Error).message);
-        response = null;
-      }
 
-      // 2. Try localhost (for development)
-      if (!response) {
+      const isViteDev = typeof window !== 'undefined' && window.location.port === '5173';
+
+      if (isViteDev) {
+        // Local dev: use Express API via Vite proxy
         try {
-          console.log('[removeBackground] trying localhost...');
-          response = await fetch('http://localhost:3000/api/remove-background', payload);
-          console.log('[removeBackground] localhost status:', response.status);
+          console.log('[removeBackground] trying local /api/remove-background...');
+          response = await fetch('/api/remove-background', payload);
+          console.log('[removeBackground] local API status:', response.status);
         } catch (e: any) {
-          console.log('[removeBackground] localhost network error:', e.message);
+          console.log('[removeBackground] local API network error:', e.message);
+          response = null;
+        }
+      } else {
+        // Production / Netlify: use Netlify function
+        try {
+          console.log('[removeBackground] trying Netlify function...');
+          response = await fetch('/.netlify/functions/remove-background', payload);
+          console.log('[removeBackground] Netlify function status:', response.status);
+        } catch (error: unknown) {
+          console.log('[removeBackground] Netlify function network error:', (error as Error).message);
           response = null;
         }
       }
