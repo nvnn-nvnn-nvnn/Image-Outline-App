@@ -1,5 +1,7 @@
 // Simple test function to verify Netlify functions are working
 exports.handler = async (event, context) => {
+  console.log('Test function called!', event.httpMethod, event.path);
+  
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
@@ -25,7 +27,8 @@ exports.handler = async (event, context) => {
       path: event.path,
       timestamp: new Date().toISOString(),
       hasApiKey: !!process.env.REMOVE_BG_API_KEY,
-      apiKeyLength: process.env.REMOVE_BG_API_KEY?.length || 0
+      apiKeyLength: process.env.REMOVE_BG_API_KEY?.length || 0,
+      headers: event.headers
     })
   };
 }
