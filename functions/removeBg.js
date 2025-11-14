@@ -88,18 +88,15 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    // ----- 1. AUTH (lightweight) -----
+    // ----- 1. AUTH / usage key (optional token) -----
     const authHeader = event.headers.authorization || '';
-    if (!authHeader.startsWith('Bearer ')) {
-      return {
-        statusCode: 401,
-        headers: corsHeaders,
-        body: JSON.stringify({ success: false, error: 'Unauthorized' })
-      };
+    let usageKey = event.headers['x-forwarded-for'] || 'anonymous';
+    if (authHeader.startsWith('Bearer ')) {
+      const token = authHeader.slice('Bearer '.length).trim();
+      if (token) {
+        usageKey = token;
+      }
     }
-
-    const token = authHeader.slice('Bearer '.length).trim();
-    const usageKey = token || event.headers['x-forwarded-for'] || 'anonymous';
 
     // ----- 2. USAGE CHECK -----
     const currentUsage = getUsageStatus(usageKey);
