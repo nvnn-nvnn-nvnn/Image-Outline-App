@@ -8,26 +8,14 @@
   FREE_LIMIT_DISABLED = "0"
   NODE_VERSION = "18"
 
-[context.production.environment]
-  REMOVE_BG_API_KEY = "HEbMXANwLV5B7fe4c6ouNimb"
-  NODE_VERSION = "18"
-
-[context.deploy-preview.environment]
-  REMOVE_BG_API_KEY = "HEbMXANwLV5B7fe4c6ouNimb"
-  NODE_VERSION = "18"
-
-[context.branch-deploy.environment]
-  REMOVE_BG_API_KEY = "HEbMXANwLV5B7fe4c6ouNimb"
-  NODE_VERSION = "18"
-
 [functions]
   node_bundler = "esbuild"
 
 [context.production]
-  environment = { NODE_VERSION = "18" }
+  environment = { REMOVE_BG_API_KEY = "HEbMXANwLV5B7fe4c6ouNimb", NODE_VERSION = "18" }
 
 [context.deploy-preview]
-  environment = { NODE_VERSION = "18" }
+  environment = { REMOVE_BG_API_KEY = "HEbMXANwLV5B7fe4c6ouNimb", NODE_VERSION = "18" }
 
 [context.branch-deploy]
-  environment = { NODE_VERSION = "18" }
+  environment = { REMOVE_BG_API_KEY = "HEbMXANwLV5B7fe4c6ouNimb", NODE_VERSION = "18" }
