@@ -153,7 +153,7 @@ export default function ImageUploadSquare() {
 
       try {
         const token = await user.getIdToken();
-        const response = await fetch('/api/usage-status', {
+        const response = await fetch('/.netlify/functions/usage-status', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`

@@ -3,6 +3,7 @@ const MAX_FREE_USES = 3;
 const usageMap = new Map(); // key -> { date: 'YYYY-MM-DD', count }
 
 const todayUTC = () => new Date().toISOString().split('T')[0];
+const isProMode = process.env.FREE_LIMIT_DISABLED === '1';
 
 /**
  * Get current usage status for a user without incrementing
@@ -10,6 +11,15 @@ const todayUTC = () => new Date().toISOString().split('T')[0];
  * @returns {{remaining: number, used: number, limit: number}}
  */
 function getUsageStatus(usageKey) {
+  // When FREE_LIMIT_DISABLED=1, treat as "pro" mode with effectively unlimited uses
+  if (isProMode) {
+    return {
+      remaining: 999,
+      used: 0,
+      limit: 999,
+    };
+  }
+
   const today = todayUTC();
   const entry = usageMap.get(usageKey) || { date: today, count: 0 };
   
@@ -100,7 +110,7 @@ exports.handler = async (event, context) => {
 
     // ----- 2. USAGE CHECK -----
     const currentUsage = getUsageStatus(usageKey);
-    if (currentUsage.remaining <= 0) {
+    if (!isProMode && currentUsage.remaining <= 0) {
       return {
         statusCode: 403,
         headers: corsHeaders,
@@ -176,7 +186,7 @@ exports.handler = async (event, context) => {
     const processedBase64 = `data:image/png;base64,${Buffer.from(processedBuffer).toString('base64')}`;
 
     // ----- 6. INCREMENT USAGE -----
-    const newUsage = incrementUsage(usageKey, false);
+    const newUsage = incrementUsage(usageKey, isProMode);
 
     return {
       statusCode: 200,
