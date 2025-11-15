@@ -8,14 +8,14 @@ import Header from './components/Layout/givingHead'
 import Footer from './components/Layout/footFetish'
 
 // Images from Assets
-const kirk = '.././src/assets/cute lady.jpg';
-const fixedkirk = '.././src/assets/cute lady outline.png';
+const kirk = './assets/cute lady.jpg';
+const fixedkirk = './assets/cute lady outline.png';
 const kanye = 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=800';
-const fixedkanye = '.././src/assets/Example Guy Outlined.png';
-const monero = '.././src/assets/Primary-Monero.png';
-const monerosvg = '.././src/assets/monero.svg';
+const fixedkanye = './assets/Example Guy Outlined.png';
+const monero = './assets/Primary-Monero.png';
+const monerosvg = './assets/monero.svg';
 
-const outlinerperson1 = '.././src/assets/Outline Person 1.png';
+const outlinerperson1 = './assets/Outline Person 1.png';
 
 
 // Authentication
