@@ -278,7 +278,7 @@ export default function ImageUploadSquare() {
         // Production / Netlify: use Netlify function
         try {
           console.log('[removeBackground] trying Netlify function...');
-          response = await fetch('/.netlify/functions/remove-background', payload);
+          response = await fetch('/.netlify/functions/removeBackground', payload);
           console.log('[removeBackground] Netlify function status:', response.status);
         } catch (error: unknown) {
           console.log('[removeBackground] Netlify function network error:', (error as Error).message);
