@@ -20,3 +20,8 @@
 
 [context.branch-deploy]
   environment = { REMOVE_BG_API_KEY = "ipL5MiRP7D2tTT9gvjjLEPs5", FREE_LIMIT_DISABLED = "1", NODE_VERSION = "20", NETLIFY_NEXT_PLUGIN_SKIP = "true" }
+
+[[redirects]]
+  from = "/api/*"
+  to = "image-outline-app.vercel.app"
+  status = 200
