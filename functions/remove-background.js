@@ -1,4 +1,11 @@
 // Netlify function - converted from working Express API
+
+// Polyfill fetch for older Node.js versions in Netlify
+if (!globalThis.fetch) {
+  const { default: fetch } = require('node-fetch');
+  globalThis.fetch = fetch;
+}
+
 const MAX_FREE_USES = 3;
 const usageMap = new Map(); // key -> { date: 'YYYY-MM-DD', count }
 
@@ -64,6 +71,9 @@ function incrementUsage(usageKey, isPro = false) {
 }
 
 exports.handler = async (event, context) => {
+  console.log('[remove-background] Function started, method:', event.httpMethod);
+  console.log('[remove-background] Headers:', JSON.stringify(event.headers, null, 2));
+  
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -88,9 +98,12 @@ exports.handler = async (event, context) => {
   }
 
   try {
+    console.log('[remove-background] Starting auth check...');
+    
     // ----- 1. AUTH (lightweight) -----
     const authHeader = event.headers.authorization || '';
     if (!authHeader.startsWith('Bearer ')) {
+      console.log('[remove-background] No Bearer token found');
       return {
         statusCode: 401,
         headers: corsHeaders,
@@ -100,6 +113,7 @@ exports.handler = async (event, context) => {
 
     const token = authHeader.slice('Bearer '.length).trim();
     const usageKey = token || event.headers['x-forwarded-for'] || 'anonymous';
+    console.log('[remove-background] Auth successful, usageKey length:', usageKey.length);
 
     // ----- 2. USAGE CHECK -----
     const currentUsage = getUsageStatus(usageKey);
@@ -139,18 +153,23 @@ exports.handler = async (event, context) => {
     }
 
     // ----- 4. API KEY CHECK -----
+    console.log('[remove-background] Checking API key...');
     const apiKey = process.env.REMOVE_BG_API_KEY;
     if (!apiKey) {
+      console.log('[remove-background] API key not found in env');
       return {
         statusCode: 500,
         headers: corsHeaders,
         body: JSON.stringify({ success: false, error: 'REMOVE_BG_API_KEY not configured' })
       };
     }
+    console.log('[remove-background] API key found, length:', apiKey.length);
 
     const base64Data = imageData.replace(/^data:image\/\w+;base64,/, '');
+    console.log('[remove-background] Base64 data length:', base64Data.length);
 
     // ----- 5. REMOVE.BG API CALL -----
+    console.log('[remove-background] Making remove.bg API call...');
     const removeBgRes = await fetch('https://api.remove.bg/v1.0/removebg', {
       method: 'POST',
       headers: {

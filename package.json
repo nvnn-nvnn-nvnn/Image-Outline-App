@@ -10,9 +10,7 @@
     "build": "vite build",
     "start": "node server/dev-server.mjs",
     "lint": "eslint .",
-    "preview": "vite preview --port 8080",
-    "dev:full": "vercel dev",
-    "vercel-build": "vite build"
+    "preview": "vite preview --port 8080"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
