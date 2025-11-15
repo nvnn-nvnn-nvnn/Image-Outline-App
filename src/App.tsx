@@ -7,15 +7,15 @@ import { Toolbar } from '@mui/material' // Add this import
 import Header from './components/Layout/givingHead'
 import Footer from './components/Layout/footFetish'
 
-// Images from Assets
-const kirk = './assets/cute lady.jpg';
-const fixedkirk = './assets/cute lady outline.png';
+// Images from Assets (import so Vite bundles them)
+import kirk from './assets/cute lady.jpg';
+import fixedkirk from './assets/cute lady outline.png';
 const kanye = 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=800';
-const fixedkanye = './assets/Example Guy Outlined.png';
-const monero = './assets/Primary-Monero.png';
-const monerosvg = './assets/monero.svg';
+import fixedkanye from './assets/Example Guy Outlined.png';
+import monero from './assets/Primary-Monero.png';
+import monerosvg from './assets/monero.svg';
 
-const outlinerperson1 = './assets/Outline Person 1.png';
+import outlinerperson1 from './assets/Outline Person 1.png';
 
 
 // Authentication
