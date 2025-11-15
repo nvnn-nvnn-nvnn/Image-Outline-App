@@ -9,7 +9,7 @@ import Footer from './components/Layout/footFetish'
 
 // Images from Assets (import so Vite bundles them)
 import kirk from './assets/cute-lady.jpg';
-import fixedkirk from './assets/cute-lady outline.png';
+import fixedkirk from './assets/cute-lady-outline.png';
 const kanye = 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=800';
 import fixedkanye from './assets/example-guy-outlined.png';
 import monero from './assets/primary-monero.png';
