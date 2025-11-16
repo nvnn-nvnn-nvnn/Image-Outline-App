@@ -916,10 +916,10 @@ function App() {
               <h2>By Devan L</h2>
               
               <div className='blog-post-content'>
-                <p>Placeholder content for blog post. This section can be expanded later with full article content, images, and formatting.</p>
+                <p>Turn your images from ordinary to extraordinary—Strokify makes highlighting your objects effortless!</p>
                 
                 <h3>Introduction</h3>
-                <p>Placeholder introduction text...</p>
+                <p></p>
                 
                 <h3>Getting Started</h3>
                 <p>Placeholder getting started text...</p>
