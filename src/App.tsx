@@ -329,11 +329,7 @@ function App() {
               <iframe 
                 width="600" 
                 height="338" 
-<<<<<<< HEAD
-                src="https://www.youtube.com/watch?v=xvFZjo5PgG0"
-=======
-                src="https://www.youtube.com/embed/YOUR_VIDEO_ID" 
->>>>>>> 95e05f146cb1b30d9cf4c85c790b73f70bc0abbf
+                src="https://www.youtube.com/watch?v=xvFZjo5PgG0" 
                 title="How to use Strokify"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
