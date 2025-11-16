@@ -318,7 +318,7 @@ function App() {
               Welcome to Strokify!
             </h2>
             <p>
-               To use Strokify, simply upload an image with an object, then we can remove the background, and you can adjust the outline stroke on the object, and viola! Your images' object now has a Stroke!
+              With Strokify, just upload an image, remove the background, adjust the outline stroke, and your object instantly gets a sleek, professional stroke! Stroke it till you finish!
             </p>
 
             <Box sx={{ 
