@@ -18,6 +18,19 @@ import monerosvg from './assets/monero.svg';
 import outlinerperson1 from './assets/outline-person-1.png';
 
 
+// images from blog
+
+import gettingStarted from './assets/blog-assets/getting-started.png'
+
+import authenticated from './assets/blog-assets/authenticated.png'
+
+import strokeOptionsEx from './assets/blog-assets/stroke-options.png'
+
+import objectExample from './assets/blog-assets/object-example.jpg'
+
+import finalDown from './assets/blog-assets/final-download.png'
+
+
 // Authentication
 
 import { useAuth } from './contexts/authContexts';
@@ -904,8 +917,13 @@ function App() {
                 sx={{ 
                   marginBottom: '20px',
                   color: '#fff',
+                  transition:'0.5s',
+                  border: '1px',
+                  borderColor: '#fff',
                   '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)'
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    boxShadow: '0 0 10px #4a90e2, 0 0 20px #4a90e2, 0 0 40px #4a90e2',
+                    
                   }
                 }}
               >
@@ -915,24 +933,35 @@ function App() {
               <h1>How to use Strokify</h1>
               <h2>By Devan L</h2>
               
-              <div className='blog-post-content'>
-                <p>Turn your images from ordinary to extraordinary—Strokify makes highlighting your objects effortless!</p>
-                
-                <h3>Introduction</h3>
-                <p></p>
-                
-                <h3>Getting Started</h3>
-                <p>Placeholder getting started text...</p>
-                
-                <h3>Step-by-Step Guide</h3>
-                <p>Placeholder step-by-step guide text...</p>
-                
-                <h3>Tips and Tricks</h3>
-                <p>Placeholder tips and tricks text...</p>
-                
-                <h3>Conclusion</h3>
-                <p>Placeholder conclusion text...</p>
-              </div>
+                <div className='blog-post-content'>
+                  <p>Turn your images from ordinary to extraordinary—Strokify makes highlighting your objects effortless!</p>
+                  <img src={kanye} alt="" />
+                  <h3>Introduction</h3>
+                  <p>Strokify prides itself on its ease of use, letting you stroke your image’s edges until you’re finished!</p>
+                  <img src={fixedkanye} alt="" />
+                  <h3>Getting Started</h3>
+                  <p>To use Strokify, you must sign-up using your Google account for authentication</p>
+                  <p>Every user is given 3 Free strokes to their images per day!</p>
+                  <img src={gettingStarted} alt="" />
+                  
+                  <h3>Step-by-Step Guide</h3>
+                  <p>Once aunthenticated, simply import an image from your computer, or drop an image into the Strokify User interface.</p>
+                  <img src={authenticated} alt="" />
+
+                  <p>After that, Strokify will automatically detect the main object in the image and cut out the background.</p>
+                  <p>You will have the liberty to either keep the cutout inpedently, or apply a stroke to the edge of your image cutout!</p>
+
+                  <img src={strokeOptionsEx} alt="" />
+                  <p>After you finish stroking it, you can download the final image!</p>
+                  <img src={finalDown} alt="" />
+
+                  <h3>Tips and Tricks</h3>
+                  <p>It is reccomended that the image you provide to the interface has a dedicated main object within it, so that Strokify can remove the background cohesively and clearly.</p>
+                  <img src={objectExample} alt="" />
+                  <h3>Conclusion</h3>
+                  <p>Strokify is a neat, effective tool that you can use to emphasize your images.</p>
+                  <p>Any further questions <strong><span onClick={() => setCurrentPage('contact')} style={{cursor: 'pointer', textShadow:'0 0 10px #4a90e2, 0 0 20px #4a90e2, 0 0 40px #4a90e2'}}>contact us!</span></strong></p>
+                </div>
             </div>
           </div>
         )}

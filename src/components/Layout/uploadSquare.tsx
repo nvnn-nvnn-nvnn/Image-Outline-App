@@ -377,6 +377,7 @@ export default function ImageUploadSquare() {
                   <Typography variant="h6" sx={{ mb: 0 }}>
                     Outline Stroke Settings
                   </Typography>
+                 
                   <Button
                     variant={strokeEnabled ? 'contained' : 'outlined'}
                     size="small"
@@ -436,8 +437,19 @@ export default function ImageUploadSquare() {
                         }}
                       />
                     </Box>
+                
                   </Box>
+              
+                  
                 )}
+
+                    <Box>
+                        <Typography>
+                          
+                          Edge control for precision work
+                  
+                        </Typography>
+                    </Box>
               </Box>
             )}
 
