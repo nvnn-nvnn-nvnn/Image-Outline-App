@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "functions"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[context.production.environment]
+  REMOVE_BG_API_KEY = "ipL5MiRP7D2tTT9gvjjLEPs5"
+  FREE_LIMIT_DISABLED = "1"
+  NODE_VERSION = "20"

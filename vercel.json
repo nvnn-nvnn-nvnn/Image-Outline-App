@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "env": {
+    "REMOVE_BG_API_KEY": "HEbMXANwLV5B7fe4c6ouNimb"
+  }
+}
