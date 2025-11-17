@@ -31,6 +31,10 @@ import objectExample from './assets/blog-assets/object-example.jpg'
 import finalDown from './assets/blog-assets/final-download.png'
 
 
+// Strokify svg
+
+import strokifySVG from './assets/blog-assets/strokify-1st-logo.svg'
+
 // Authentication
 
 import { useAuth } from './contexts/authContexts';
@@ -235,9 +239,9 @@ function App() {
       {currentPage == 'index' && (
         <div className='index-page'>
           <div className='index-headers'>
-            <h1>
-              Welcome to Strokify!
-            </h1>
+            
+            <img src={strokifySVG} alt="" className='strokify-svg' />
+
             <h2>
               Create outline strokes for your images efficiently and effectively
             </h2>
@@ -716,7 +720,7 @@ function App() {
                   <div className="blog-content">
                     <h1>How to use Strokify</h1>
                     <h2>Devan L</h2>
-                    <img src={fixedkirk} alt="Strokify example" />
+                    <img src={strokifySVG} alt="Strokify example" className='blog-content-svg' />
                     <p>A guide detailing how to use Strokify effectively and efficiently.</p>
                   </div>
                 </div>
@@ -935,7 +939,7 @@ function App() {
               
                 <div className='blog-post-content'>
                   <p>Turn your images from ordinary to extraordinary—Strokify makes highlighting your objects effortless!</p>
-                  <img src={kanye} alt="" />
+                  <img src={strokifySVG} alt="" />
                   <h3>Introduction</h3>
                   <p>Strokify prides itself on its ease of use, letting you stroke your image’s edges until you’re finished!</p>
                   <img src={fixedkanye} alt="" />
