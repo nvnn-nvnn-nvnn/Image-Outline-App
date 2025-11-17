@@ -953,7 +953,7 @@ function App() {
                   <img src={authenticated} alt="" />
 
                   <p>After that, Strokify will automatically detect the main object in the image and cut out the background.</p>
-                  <p>You will have the liberty to either keep the cutout inpedently, or apply a stroke to the edge of your image cutout!</p>
+                  <p>You will have the liberty to either keep the cutout independently, or apply a stroke to the edge of your image cutout!</p>
 
                   <img src={strokeOptionsEx} alt="" />
                   <p>After you finish stroking it, you can download the final image!</p>
