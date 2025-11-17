@@ -398,7 +398,7 @@ export default function Footer() {
                   '&:hover': { color: '#fff' },
                   cursor: 'pointer',
                 }}
-                onClick={handleNavigation('tos')}
+                onClick={handleNavigation('terms')}
               >
                 Terms of Service
               </Link>
